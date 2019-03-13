@@ -88,6 +88,11 @@
     from tb_user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <!-- <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select account,password,email
+    from tb_user
+    where id = #{account,jdbcType=STRING}
+  </select> -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_user
     where id = #{id,jdbcType=INTEGER}

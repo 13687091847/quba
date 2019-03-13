@@ -3,15 +3,34 @@ package com.liuhuangming.entity;
 import java.util.Date;
 
 public class Comment {
-    private Integer id;
+    public Comment() {
+		super();
+	}
 
-    private String strategyid;
+	public Comment(String account, String strategyId, String content, Date commentDate, String nickName,
+			String headImg) {
+		super();
+		this.account = account;
+		this.strategyId = strategyId;
+		this.content = content;
+		this.commentDate = commentDate;
+		this.nickName = nickName;
+		this.headImg = headImg;
+	}
+
+	private Integer id;
 
     private String account;
 
+    private String strategyId;
+
     private String content;
 
-    private Date commentdate;
+    private Date commentDate;
+
+    private String nickName;
+
+    private String headImg;
 
     public Integer getId() {
         return id;
@@ -19,14 +38,6 @@ public class Comment {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getStrategyid() {
-        return strategyid;
-    }
-
-    public void setStrategyid(String strategyid) {
-        this.strategyid = strategyid == null ? null : strategyid.trim();
     }
 
     public String getAccount() {
@@ -37,6 +48,14 @@ public class Comment {
         this.account = account == null ? null : account.trim();
     }
 
+    public String getStrategyId() {
+        return strategyId;
+    }
+
+    public void setStrategyId(String strategyId) {
+        this.strategyId = strategyId == null ? null : strategyId.trim();
+    }
+
     public String getContent() {
         return content;
     }
@@ -45,11 +64,27 @@ public class Comment {
         this.content = content == null ? null : content.trim();
     }
 
-    public Date getCommentdate() {
-        return commentdate;
+    public Date getCommentDate() {
+        return commentDate;
     }
 
-    public void setCommentdate(Date commentdate) {
-        this.commentdate = commentdate;
+    public void setCommentDate(Date commentDate) {
+        this.commentDate = commentDate;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName == null ? null : nickName.trim();
+    }
+
+    public String getHeadImg() {
+        return headImg;
+    }
+
+    public void setHeadImg(String headImg) {
+        this.headImg = headImg == null ? null : headImg.trim();
     }
 }

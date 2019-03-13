@@ -10,7 +10,7 @@ public interface OrderMapper {
 
     int deleteByExample(OrderExample example);
 
-    int deleteByPrimaryKey(Long orderid);
+    int deleteByPrimaryKey(Long orderId);
 
     int insert(Order record);
 
@@ -18,7 +18,7 @@ public interface OrderMapper {
 
     List<Order> selectByExample(OrderExample example);
 
-    Order selectByPrimaryKey(Long orderid);
+    Order selectByPrimaryKey(Long orderId);
 
     int updateByExampleSelective(@Param("record") Order record, @Param("example") OrderExample example);
 

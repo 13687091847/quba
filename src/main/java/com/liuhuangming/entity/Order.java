@@ -3,7 +3,21 @@ package com.liuhuangming.entity;
 import java.util.Date;
 
 public class Order {
-    private Long orderid;
+    public Order() {
+		super();
+	}
+
+	public Order(Long orderId, String account, Date createTime, Boolean orderStatus, Integer totalPrice, Date payTime) {
+		super();
+		this.orderId = orderId;
+		this.account = account;
+		this.createTime = createTime;
+		this.orderStatus = orderStatus;
+		this.totalPrice = totalPrice;
+		this.payTime = payTime;
+	}
+
+	private Long orderId;
 
     private String account;
 
@@ -15,12 +29,12 @@ public class Order {
 
     private Date payTime;
 
-    public Long getOrderid() {
-        return orderid;
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setOrderid(Long orderid) {
-        this.orderid = orderid;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public String getAccount() {

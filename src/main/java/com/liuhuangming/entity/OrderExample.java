@@ -105,63 +105,63 @@ public class OrderExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
-        public Criteria andOrderidIsNull() {
-            addCriterion("orderId is null");
+        public Criteria andOrderIdIsNull() {
+            addCriterion("order_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidIsNotNull() {
-            addCriterion("orderId is not null");
+        public Criteria andOrderIdIsNotNull() {
+            addCriterion("order_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidEqualTo(Long value) {
-            addCriterion("orderId =", value, "orderid");
+        public Criteria andOrderIdEqualTo(Long value) {
+            addCriterion("order_id =", value, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidNotEqualTo(Long value) {
-            addCriterion("orderId <>", value, "orderid");
+        public Criteria andOrderIdNotEqualTo(Long value) {
+            addCriterion("order_id <>", value, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidGreaterThan(Long value) {
-            addCriterion("orderId >", value, "orderid");
+        public Criteria andOrderIdGreaterThan(Long value) {
+            addCriterion("order_id >", value, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidGreaterThanOrEqualTo(Long value) {
-            addCriterion("orderId >=", value, "orderid");
+        public Criteria andOrderIdGreaterThanOrEqualTo(Long value) {
+            addCriterion("order_id >=", value, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidLessThan(Long value) {
-            addCriterion("orderId <", value, "orderid");
+        public Criteria andOrderIdLessThan(Long value) {
+            addCriterion("order_id <", value, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidLessThanOrEqualTo(Long value) {
-            addCriterion("orderId <=", value, "orderid");
+        public Criteria andOrderIdLessThanOrEqualTo(Long value) {
+            addCriterion("order_id <=", value, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidIn(List<Long> values) {
-            addCriterion("orderId in", values, "orderid");
+        public Criteria andOrderIdIn(List<Long> values) {
+            addCriterion("order_id in", values, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidNotIn(List<Long> values) {
-            addCriterion("orderId not in", values, "orderid");
+        public Criteria andOrderIdNotIn(List<Long> values) {
+            addCriterion("order_id not in", values, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidBetween(Long value1, Long value2) {
-            addCriterion("orderId between", value1, value2, "orderid");
+        public Criteria andOrderIdBetween(Long value1, Long value2) {
+            addCriterion("order_id between", value1, value2, "orderId");
             return (Criteria) this;
         }
 
-        public Criteria andOrderidNotBetween(Long value1, Long value2) {
-            addCriterion("orderId not between", value1, value2, "orderid");
+        public Criteria andOrderIdNotBetween(Long value1, Long value2) {
+            addCriterion("order_id not between", value1, value2, "orderId");
             return (Criteria) this;
         }
 

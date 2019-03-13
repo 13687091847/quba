@@ -3,10 +3,12 @@
 <mapper namespace="com.liuhuangming.mapper.CommentMapper">
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Comment">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="strategyId" jdbcType="VARCHAR" property="strategyid" />
     <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="commentDate" jdbcType="TIMESTAMP" property="commentdate" />
+    <result column="comment_date" jdbcType="TIMESTAMP" property="commentDate" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="head_img" jdbcType="VARCHAR" property="headImg" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, strategyId, account, content, commentDate
+    id, account, strategy_id, content, comment_date, nick_name, head_img
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.CommentExample" resultMap="BaseResultMap">
     select
@@ -100,10 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Comment">
-    insert into tb_comment (id, strategyId, account, 
-      content, commentDate)
-    values (#{id,jdbcType=INTEGER}, #{strategyid,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{commentdate,jdbcType=TIMESTAMP})
+    insert into tb_comment (id, account, strategy_id, 
+      content, comment_date, nick_name, 
+      head_img)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP}, #{nickName,jdbcType=VARCHAR}, 
+      #{headImg,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Comment">
     insert into tb_comment
@@ -111,34 +115,46 @@
       <if test="id != null">
         id,
       </if>
-      <if test="strategyid != null">
-        strategyId,
-      </if>
       <if test="account != null">
         account,
+      </if>
+      <if test="strategyId != null">
+        strategy_id,
       </if>
       <if test="content != null">
         content,
       </if>
-      <if test="commentdate != null">
-        commentDate,
+      <if test="commentDate != null">
+        comment_date,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="headImg != null">
+        head_img,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="strategyid != null">
-        #{strategyid,jdbcType=VARCHAR},
-      </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyId != null">
+        #{strategyId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
       </if>
-      <if test="commentdate != null">
-        #{commentdate,jdbcType=TIMESTAMP},
+      <if test="commentDate != null">
+        #{commentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        #{headImg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -154,17 +170,23 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.strategyid != null">
-        strategyId = #{record.strategyid,jdbcType=VARCHAR},
-      </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyId != null">
+        strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.commentdate != null">
-        commentDate = #{record.commentdate,jdbcType=TIMESTAMP},
+      <if test="record.commentDate != null">
+        comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.headImg != null">
+        head_img = #{record.headImg,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -174,10 +196,12 @@
   <update id="updateByExample" parameterType="map">
     update tb_comment
     set id = #{record.id,jdbcType=INTEGER},
-      strategyId = #{record.strategyid,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
+      strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
-      commentDate = #{record.commentdate,jdbcType=TIMESTAMP}
+      comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      head_img = #{record.headImg,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -185,27 +209,35 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Comment">
     update tb_comment
     <set>
-      <if test="strategyid != null">
-        strategyId = #{strategyid,jdbcType=VARCHAR},
-      </if>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyId != null">
+        strategy_id = #{strategyId,jdbcType=VARCHAR},
       </if>
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="commentdate != null">
-        commentDate = #{commentdate,jdbcType=TIMESTAMP},
+      <if test="commentDate != null">
+        comment_date = #{commentDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="headImg != null">
+        head_img = #{headImg,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Comment">
     update tb_comment
-    set strategyId = #{strategyid,jdbcType=VARCHAR},
-      account = #{account,jdbcType=VARCHAR},
+    set account = #{account,jdbcType=VARCHAR},
+      strategy_id = #{strategyId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
-      commentDate = #{commentdate,jdbcType=TIMESTAMP}
+      comment_date = #{commentDate,jdbcType=TIMESTAMP},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      head_img = #{headImg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

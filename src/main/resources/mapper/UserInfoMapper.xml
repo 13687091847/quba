@@ -92,6 +92,11 @@
     from tb_user_detail
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select account,nick_name,head_img,signature,email,birth_day,money
+    from tb_user_detail
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_user_detail
     where id = #{id,jdbcType=INTEGER}

@@ -3,7 +3,23 @@ package com.liuhuangming.entity;
 import java.util.Date;
 
 public class Strategy {
-    private Integer id;
+    public Strategy() {
+		super();
+	}
+
+	public Strategy(Long strategyId, String account, String title, String content, String imgSrc, Date uploadDate,
+			String city) {
+		super();
+		this.strategyId = strategyId;
+		this.account = account;
+		this.title = title;
+		this.content = content;
+		this.imgSrc = imgSrc;
+		this.uploadDate = uploadDate;
+		this.city = city;
+	}
+
+	private Integer id;
 
     private Long strategyId;
 

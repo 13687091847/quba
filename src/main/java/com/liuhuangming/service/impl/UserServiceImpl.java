@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import com.liuhuangming.bean.Message;
 import com.liuhuangming.entity.User;
 import com.liuhuangming.entity.UserExample;
-import com.liuhuangming.entity.UserExample.Criteria;
 import com.liuhuangming.entity.UserInfo;
+import com.liuhuangming.entity.UserExample.Criteria;
 import com.liuhuangming.mapper.UserInfoMapper;
 import com.liuhuangming.mapper.UserMapper;
 import com.liuhuangming.service.UserService;
@@ -105,11 +105,21 @@ public class UserServiceImpl implements UserService {
 			return false;
 		}
 	}
+	/**
+	 * 获取当前登录用户的信息
+	 */
 	@Override
-	public Object getAll(HttpSession httpSession) {
+	public UserInfo getAll(HttpSession httpSession) {
 		// TODO Auto-generated method stub
-		
-		return null;
+		UserInfo userInfo = new UserInfo();
+		try {
+			String account = (String)httpSession.getAttribute("account");
+			userInfo = userInfoMapper.selectByAccount(account);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return userInfo;
 	}
 
 }

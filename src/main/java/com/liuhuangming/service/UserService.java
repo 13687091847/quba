@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.liuhuangming.bean.Message;
 import com.liuhuangming.entity.User;
+import com.liuhuangming.entity.UserInfo;
 
 /**
   * 用户业务逻辑接口
@@ -53,5 +54,5 @@ public interface UserService {
 	 * @param httpSession
 	 * @return
 	 */
-	Object getAll(HttpSession httpSession);
+	UserInfo getAll(HttpSession httpSession);
 }

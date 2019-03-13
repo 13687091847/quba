@@ -1,7 +1,17 @@
 package com.liuhuangming.entity;
 
 public class Like {
-    private Integer id;
+    public Like() {
+		super();
+	}
+
+	public Like(Long strategyId, String account) {
+		super();
+		this.strategyId = strategyId;
+		this.account = account;
+	}
+
+	private Integer id;
 
     private Long strategyId;
 

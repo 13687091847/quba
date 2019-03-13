@@ -1,7 +1,17 @@
 package com.liuhuangming.entity;
 
 public class Collection {
-    private Integer id;
+    public Collection() {
+		super();
+	}
+
+	public Collection(String account, Long strategyId) {
+		super();
+		this.account = account;
+		this.strategyId = strategyId;
+	}
+
+	private Integer id;
 
     private String account;
 
