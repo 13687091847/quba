@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuhuangming.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.User">
+<mapper namespace="com.liuhuangming.mapper.StrategyDAO">
+  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Strategy">
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="strategy_id" jdbcType="BIGINT" property="strategyId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="password" jdbcType="VARCHAR" property="password" />
-    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="img_src" jdbcType="VARCHAR" property="imgSrc" />
+    <result column="upload_date" jdbcType="TIMESTAMP" property="uploadDate" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,100 +70,141 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, password, email
+    id, strategy_id, account, title, content, img_src, upload_date, city
   </sql>
-  <select id="selectByExample" parameterType="com.liuhuangming.entity.UserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuhuangming.entity.StrategyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_user
+    from tb_strategy
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_user
+    from tb_strategy
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <!-- <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select account,password,email
-    from tb_user
-    where id = #{account,jdbcType=STRING}
-  </select> -->
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_user
+    delete from tb_strategy
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.UserExample">
-    delete from tb_user
+  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.StrategyExample">
+    delete from tb_strategy
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuhuangming.entity.User">
-    insert into tb_user (id, account, password, 
-      email)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{email,jdbcType=VARCHAR})
+  <insert id="insert" parameterType="com.liuhuangming.entity.Strategy">
+    insert into tb_strategy (id, strategy_id, account, 
+      title, content, img_src, 
+      upload_date, city)
+    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{imgSrc,jdbcType=VARCHAR}, 
+      #{uploadDate,jdbcType=TIMESTAMP}, #{city,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.liuhuangming.entity.User">
-    insert into tb_user
+  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Strategy">
+    insert into tb_strategy
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
+      <if test="strategyId != null">
+        strategy_id,
+      </if>
       <if test="account != null">
         account,
       </if>
-      <if test="password != null">
-        password,
+      <if test="title != null">
+        title,
       </if>
-      <if test="email != null">
-        email,
+      <if test="content != null">
+        content,
+      </if>
+      <if test="imgSrc != null">
+        img_src,
+      </if>
+      <if test="uploadDate != null">
+        upload_date,
+      </if>
+      <if test="city != null">
+        city,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
+      <if test="strategyId != null">
+        #{strategyId,jdbcType=BIGINT},
+      </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSrc != null">
+        #{imgSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadDate != null">
+        #{uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuhuangming.entity.UserExample" resultType="java.lang.Long">
-    select count(*) from tb_user
+  <select id="countByExample" parameterType="com.liuhuangming.entity.StrategyExample" resultType="java.lang.Long">
+    select count(*) from tb_strategy
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_user
+    update tb_strategy
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
+      <if test="record.strategyId != null">
+        strategy_id = #{record.strategyId,jdbcType=BIGINT},
+      </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
       </if>
-      <if test="record.password != null">
-        password = #{record.password,jdbcType=VARCHAR},
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
       </if>
-      <if test="record.email != null">
-        email = #{record.email,jdbcType=VARCHAR},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imgSrc != null">
+        img_src = #{record.imgSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadDate != null">
+        upload_date = #{record.uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -167,35 +212,55 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_user
+    update tb_strategy
     set id = #{record.id,jdbcType=INTEGER},
+      strategy_id = #{record.strategyId,jdbcType=BIGINT},
       account = #{record.account,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR}
+      title = #{record.title,jdbcType=VARCHAR},
+      content = #{record.content,jdbcType=VARCHAR},
+      img_src = #{record.imgSrc,jdbcType=VARCHAR},
+      upload_date = #{record.uploadDate,jdbcType=TIMESTAMP},
+      city = #{record.city,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.User">
-    update tb_user
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Strategy">
+    update tb_strategy
     <set>
+      <if test="strategyId != null">
+        strategy_id = #{strategyId,jdbcType=BIGINT},
+      </if>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="imgSrc != null">
+        img_src = #{imgSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadDate != null">
+        upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.User">
-    update tb_user
-    set account = #{account,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Strategy">
+    update tb_strategy
+    set strategy_id = #{strategyId,jdbcType=BIGINT},
+      account = #{account,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      img_src = #{imgSrc,jdbcType=VARCHAR},
+      upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      city = #{city,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuhuangming.mapper.LikeMapper">
-  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Like">
+<mapper namespace="com.liuhuangming.mapper.CollectionDAO">
+  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Collection">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="strategy_id" jdbcType="BIGINT" property="strategyId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="strategy_id" jdbcType="BIGINT" property="strategyId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,86 +65,94 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, strategy_id, account
+    id, account, strategy_id
   </sql>
-  <select id="selectByExample" parameterType="com.liuhuangming.entity.LikeExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuhuangming.entity.CollectionExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_like
+    from tb_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_like
+    from tb_collection
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_like
+    delete from tb_collection
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.LikeExample">
-    delete from tb_like
+  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.CollectionExample">
+    delete from tb_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuhuangming.entity.Like">
-    insert into tb_like (id, strategy_id, account
+  <insert id="insert" parameterType="com.liuhuangming.entity.Collection">
+    insert into tb_collection (id, account, strategy_id
       )
-    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Like">
-    insert into tb_like
+  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Collection">
+    insert into tb_collection
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
       </if>
-      <if test="strategyId != null">
-        strategy_id,
-      </if>
       <if test="account != null">
         account,
+      </if>
+      <if test="strategyId != null">
+        strategy_id,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="strategyId != null">
-        #{strategyId,jdbcType=BIGINT},
-      </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
       </if>
+      <if test="strategyId != null">
+        #{strategyId,jdbcType=BIGINT},
+      </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuhuangming.entity.LikeExample" resultType="java.lang.Long">
-    select count(*) from tb_like
+  <select id="countByExample" parameterType="com.liuhuangming.entity.CollectionExample" resultType="java.lang.Long">
+    select count(*) from tb_collection
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_like
+    update tb_collection
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.strategyId != null">
-        strategy_id = #{record.strategyId,jdbcType=BIGINT},
-      </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.strategyId != null">
+        strategy_id = #{record.strategyId,jdbcType=BIGINT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -152,30 +160,30 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_like
+    update tb_collection
     set id = #{record.id,jdbcType=INTEGER},
-      strategy_id = #{record.strategyId,jdbcType=BIGINT},
-      account = #{record.account,jdbcType=VARCHAR}
+      account = #{record.account,jdbcType=VARCHAR},
+      strategy_id = #{record.strategyId,jdbcType=BIGINT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Like">
-    update tb_like
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Collection">
+    update tb_collection
     <set>
-      <if test="strategyId != null">
-        strategy_id = #{strategyId,jdbcType=BIGINT},
-      </if>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="strategyId != null">
+        strategy_id = #{strategyId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Like">
-    update tb_like
-    set strategy_id = #{strategyId,jdbcType=BIGINT},
-      account = #{account,jdbcType=VARCHAR}
+  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Collection">
+    update tb_collection
+    set account = #{account,jdbcType=VARCHAR},
+      strategy_id = #{strategyId,jdbcType=BIGINT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

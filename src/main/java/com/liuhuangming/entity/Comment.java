@@ -1,36 +1,49 @@
 package com.liuhuangming.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Comment {
-    public Comment() {
-		super();
-	}
+/**
+ * tb_comment
+ * @author 
+ */
+public class Comment implements Serializable {
+    /**
+     * 表ID
+     */
+    private Integer id;
 
-	public Comment(String account, String strategyId, String content, Date commentDate, String nickName,
-			String headImg) {
-		super();
-		this.account = account;
-		this.strategyId = strategyId;
-		this.content = content;
-		this.commentDate = commentDate;
-		this.nickName = nickName;
-		this.headImg = headImg;
-	}
-
-	private Integer id;
-
+    /**
+     * 账号
+     */
     private String account;
 
+    /**
+     * 游记ID
+     */
     private String strategyId;
 
+    /**
+     * 评论内容
+     */
     private String content;
 
+    /**
+     * 评论时间
+     */
     private Date commentDate;
 
+    /**
+     * 昵称
+     */
     private String nickName;
 
+    /**
+     * 头像
+     */
     private String headImg;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -45,7 +58,7 @@ public class Comment {
     }
 
     public void setAccount(String account) {
-        this.account = account == null ? null : account.trim();
+        this.account = account;
     }
 
     public String getStrategyId() {
@@ -53,7 +66,7 @@ public class Comment {
     }
 
     public void setStrategyId(String strategyId) {
-        this.strategyId = strategyId == null ? null : strategyId.trim();
+        this.strategyId = strategyId;
     }
 
     public String getContent() {
@@ -61,7 +74,7 @@ public class Comment {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
     }
 
     public Date getCommentDate() {
@@ -77,7 +90,7 @@ public class Comment {
     }
 
     public void setNickName(String nickName) {
-        this.nickName = nickName == null ? null : nickName.trim();
+        this.nickName = nickName;
     }
 
     public String getHeadImg() {
@@ -85,6 +98,59 @@ public class Comment {
     }
 
     public void setHeadImg(String headImg) {
-        this.headImg = headImg == null ? null : headImg.trim();
+        this.headImg = headImg;
+    }
+
+    @Override
+    public boolean equals(Object that) {
+        if (this == that) {
+            return true;
+        }
+        if (that == null) {
+            return false;
+        }
+        if (getClass() != that.getClass()) {
+            return false;
+        }
+        Comment other = (Comment) that;
+        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+            && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
+            && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
+            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
+            && (this.getCommentDate() == null ? other.getCommentDate() == null : this.getCommentDate().equals(other.getCommentDate()))
+            && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
+            && (this.getHeadImg() == null ? other.getHeadImg() == null : this.getHeadImg().equals(other.getHeadImg()));
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
+        result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
+        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
+        result = prime * result + ((getCommentDate() == null) ? 0 : getCommentDate().hashCode());
+        result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
+        result = prime * result + ((getHeadImg() == null) ? 0 : getHeadImg().hashCode());
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(getClass().getSimpleName());
+        sb.append(" [");
+        sb.append("Hash = ").append(hashCode());
+        sb.append(", id=").append(id);
+        sb.append(", account=").append(account);
+        sb.append(", strategyId=").append(strategyId);
+        sb.append(", content=").append(content);
+        sb.append(", commentDate=").append(commentDate);
+        sb.append(", nickName=").append(nickName);
+        sb.append(", headImg=").append(headImg);
+        sb.append(", serialVersionUID=").append(serialVersionUID);
+        sb.append("]");
+        return sb.toString();
     }
 }

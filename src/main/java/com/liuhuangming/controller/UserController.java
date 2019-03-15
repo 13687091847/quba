@@ -9,10 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.liuhuangming.bean.Message;
-import com.liuhuangming.entity.User;
 import com.liuhuangming.entity.UserInfo;
 import com.liuhuangming.service.UserInfoService;
-import com.liuhuangming.service.UserService;
+
 
 /**
  * 用户控制器
@@ -25,8 +24,6 @@ import com.liuhuangming.service.UserService;
 public class UserController {
 
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private UserInfoService userInfoService;
 	/**
 	 * 验证用户是否存在
@@ -38,7 +35,7 @@ public class UserController {
 	@ResponseBody
 	public boolean checkUser(String account) {
 		System.out.println("checkUser=====>");
-		return userService.checkUser(account);
+		return userInfoService.checkUser(account);
 	}
 
 	/**
@@ -49,9 +46,10 @@ public class UserController {
 	 */
 	@RequestMapping("regist")
 	@ResponseBody
-	public Message regist(User user, HttpSession httpSession) {
+	public Message regist(UserInfo userInfo, HttpSession httpSession) {
+		System.out.println(userInfo.getPassword());
 		System.out.println("regist=====>");
-		return userService.regist(user, httpSession);
+		return userInfoService.regist(userInfo, httpSession);
 	}
 
 	/**
@@ -63,9 +61,9 @@ public class UserController {
 	 */
 	@RequestMapping("login")
 	@ResponseBody
-	public Message login(User user, HttpSession httpSession) {
+	public Message login(UserInfo user, HttpSession httpSession) {
 		System.out.println("lgin=====>");
-		return userService.login(user, httpSession);
+		return userInfoService.login(user, httpSession);
 	}
 
 	/**
@@ -78,7 +76,7 @@ public class UserController {
 	@ResponseBody
 	public boolean checkLogin(HttpSession httpSession) {
 		System.out.println("checkLogin=====>");
-		return userService.isLogin(httpSession);
+		return userInfoService.isLogin(httpSession);
 	}
 
 	/**
@@ -90,7 +88,7 @@ public class UserController {
 	@RequestMapping("getUserInfor")
 	@ResponseBody
 	public Object getUserInfo(HttpSession httpSession) {
-		Object userInfo = userService.getAll(httpSession);
+		Object userInfo = userInfoService.getAll(httpSession);
 		return userInfo;
 	}
 

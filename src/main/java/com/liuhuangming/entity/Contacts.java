@@ -3,10 +3,10 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 
 /**
- * tb_collection
+ * tb_contacts
  * @author 
  */
-public class Collection implements Serializable {
+public class Contacts implements Serializable {
     /**
      * 表ID
      */
@@ -18,9 +18,19 @@ public class Collection implements Serializable {
     private String account;
 
     /**
-     * 游记ID
+     * 联系人姓名
      */
-    private Long strategyId;
+    private String contactName;
+
+    /**
+     * 身份证号码
+     */
+    private String idCard;
+
+    /**
+     * 状态（0：待核验；1：已核验）
+     */
+    private Boolean status;
 
     private static final long serialVersionUID = 1L;
 
@@ -40,12 +50,28 @@ public class Collection implements Serializable {
         this.account = account;
     }
 
-    public Long getStrategyId() {
-        return strategyId;
+    public String getContactName() {
+        return contactName;
     }
 
-    public void setStrategyId(Long strategyId) {
-        this.strategyId = strategyId;
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override
@@ -59,10 +85,12 @@ public class Collection implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Collection other = (Collection) that;
+        Contacts other = (Contacts) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
-            && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()));
+            && (this.getContactName() == null ? other.getContactName() == null : this.getContactName().equals(other.getContactName()))
+            && (this.getIdCard() == null ? other.getIdCard() == null : this.getIdCard().equals(other.getIdCard()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -71,7 +99,9 @@ public class Collection implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
-        result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
+        result = prime * result + ((getContactName() == null) ? 0 : getContactName().hashCode());
+        result = prime * result + ((getIdCard() == null) ? 0 : getIdCard().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -83,7 +113,9 @@ public class Collection implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", account=").append(account);
-        sb.append(", strategyId=").append(strategyId);
+        sb.append(", contactName=").append(contactName);
+        sb.append(", idCard=").append(idCard);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
