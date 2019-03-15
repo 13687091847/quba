@@ -1,6 +1,5 @@
 package com.liuhuangming.service.impl;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,17 +8,27 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.liuhuangming.bean.Message;
+import com.liuhuangming.entity.Follow;
+import com.liuhuangming.entity.FollowExample;
 import com.liuhuangming.entity.UserInfo;
 import com.liuhuangming.entity.UserInfoExample;
 import com.liuhuangming.entity.UserInfoExample.Criteria;
+import com.liuhuangming.mapper.FansDAO;
+import com.liuhuangming.mapper.FollowDAO;
 import com.liuhuangming.mapper.UserInfoDAO;
 import com.liuhuangming.service.UserInfoService;
+import com.sun.tools.javac.util.List;
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService{
 	
 	@Autowired
 	private UserInfoDAO userInfoDAO;
+	@Autowired
+	private FollowDAO followDAO;
+	@Autowired
+	private FansDAO fasDAO;
+	
 	
 	/**
 	  * 验证用户是否存在
@@ -79,15 +88,17 @@ public class UserInfoServiceImpl implements UserInfoService{
 		return message;
 	}
 	/**
-	  * 判断用户是否登录
+	  * 判断用户是否登录,如果登录则返回当前登录用户的详细信息，否则返回null
 	 */
 	@Override
-	public boolean isLogin(HttpSession httpSession) {
+	public Object isLogin(HttpSession httpSession) {
 		// TODO Auto-generated method stub
-		if(httpSession.getAttribute("account") != null) {
-			return true;
+		String account = (String)httpSession.getAttribute("account");
+		if(account != null) {
+			UserInfo userInfo = getAll(httpSession);
+			return userInfo;
 		}else {
-			return false;
+			return null;
 		}
 	}
 	/**
@@ -100,6 +111,12 @@ public class UserInfoServiceImpl implements UserInfoService{
 		try {
 			String account = (String)httpSession.getAttribute("account");
 			userInfo = userInfoDAO.selectByPrimaryKey(account);
+			//获取关注数
+			List<Follow> resultList = followDAO.selectByAccount(account);
+			if(resultList.isEmpty() == true) {
+				
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

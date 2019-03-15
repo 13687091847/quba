@@ -43,7 +43,7 @@ public interface UserInfoService {
 	 * @param httpSession
 	 * @return
 	 */
-	boolean isLogin(HttpSession httpSession);
+	Object isLogin(HttpSession httpSession);
 	/**
 	  * 获取用户的详细信息
 	 * 

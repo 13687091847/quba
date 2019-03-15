@@ -67,14 +67,14 @@ public class UserController {
 	}
 
 	/**
-	 * 判断用户是否已登录
+	 * 判断用户是否已登录，如果用户已登录，则返回当前登录用用户的详细信息，否则返回null
 	 * 
 	 * @param httpSession
 	 * @return
 	 */
 	@RequestMapping("checkLogin")
 	@ResponseBody
-	public boolean checkLogin(HttpSession httpSession) {
+	public Object checkLogin(HttpSession httpSession) {
 		System.out.println("checkLogin=====>");
 		return userInfoService.isLogin(httpSession);
 	}

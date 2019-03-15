@@ -1,8 +1,6 @@
 package com.liuhuangming.entity;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 public class UserInfoExample {
@@ -124,32 +122,6 @@ public class UserInfoExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value, String property) {
-            if (value == null) {
-                throw new RuntimeException("Value for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value.getTime()), property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, List<Date> values, String property) {
-            if (values == null || values.size() == 0) {
-                throw new RuntimeException("Value list for " + property + " cannot be null or empty");
-            }
-            List<java.sql.Date> dateList = new ArrayList<java.sql.Date>();
-            Iterator<Date> iter = values.iterator();
-            while (iter.hasNext()) {
-                dateList.add(new java.sql.Date(iter.next().getTime()));
-            }
-            addCriterion(condition, dateList, property);
-        }
-
-        protected void addCriterionForJDBCDate(String condition, Date value1, Date value2, String property) {
-            if (value1 == null || value2 == null) {
-                throw new RuntimeException("Between values for " + property + " cannot be null");
-            }
-            addCriterion(condition, new java.sql.Date(value1.getTime()), new java.sql.Date(value2.getTime()), property);
         }
 
         public Criteria andAccountIsNull() {
@@ -502,6 +474,126 @@ public class UserInfoExample {
             return (Criteria) this;
         }
 
+        public Criteria andFollowerNumIsNull() {
+            addCriterion("follower_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumIsNotNull() {
+            addCriterion("follower_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumEqualTo(Integer value) {
+            addCriterion("follower_num =", value, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumNotEqualTo(Integer value) {
+            addCriterion("follower_num <>", value, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumGreaterThan(Integer value) {
+            addCriterion("follower_num >", value, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("follower_num >=", value, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumLessThan(Integer value) {
+            addCriterion("follower_num <", value, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumLessThanOrEqualTo(Integer value) {
+            addCriterion("follower_num <=", value, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumIn(List<Integer> values) {
+            addCriterion("follower_num in", values, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumNotIn(List<Integer> values) {
+            addCriterion("follower_num not in", values, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumBetween(Integer value1, Integer value2) {
+            addCriterion("follower_num between", value1, value2, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFollowerNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("follower_num not between", value1, value2, "followerNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumIsNull() {
+            addCriterion("fans_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumIsNotNull() {
+            addCriterion("fans_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumEqualTo(Integer value) {
+            addCriterion("fans_num =", value, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumNotEqualTo(Integer value) {
+            addCriterion("fans_num <>", value, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumGreaterThan(Integer value) {
+            addCriterion("fans_num >", value, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("fans_num >=", value, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumLessThan(Integer value) {
+            addCriterion("fans_num <", value, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumLessThanOrEqualTo(Integer value) {
+            addCriterion("fans_num <=", value, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumIn(List<Integer> values) {
+            addCriterion("fans_num in", values, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumNotIn(List<Integer> values) {
+            addCriterion("fans_num not in", values, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumBetween(Integer value1, Integer value2) {
+            addCriterion("fans_num between", value1, value2, "fansNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andFansNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("fans_num not between", value1, value2, "fansNum");
+            return (Criteria) this;
+        }
+
         public Criteria andEmailIsNull() {
             addCriterion("email is null");
             return (Criteria) this;
@@ -582,53 +674,63 @@ public class UserInfoExample {
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayEqualTo(Date value) {
-            addCriterionForJDBCDate("birth_day =", value, "birthDay");
+        public Criteria andBirthDayEqualTo(String value) {
+            addCriterion("birth_day =", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayNotEqualTo(Date value) {
-            addCriterionForJDBCDate("birth_day <>", value, "birthDay");
+        public Criteria andBirthDayNotEqualTo(String value) {
+            addCriterion("birth_day <>", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayGreaterThan(Date value) {
-            addCriterionForJDBCDate("birth_day >", value, "birthDay");
+        public Criteria andBirthDayGreaterThan(String value) {
+            addCriterion("birth_day >", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("birth_day >=", value, "birthDay");
+        public Criteria andBirthDayGreaterThanOrEqualTo(String value) {
+            addCriterion("birth_day >=", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayLessThan(Date value) {
-            addCriterionForJDBCDate("birth_day <", value, "birthDay");
+        public Criteria andBirthDayLessThan(String value) {
+            addCriterion("birth_day <", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("birth_day <=", value, "birthDay");
+        public Criteria andBirthDayLessThanOrEqualTo(String value) {
+            addCriterion("birth_day <=", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayIn(List<Date> values) {
-            addCriterionForJDBCDate("birth_day in", values, "birthDay");
+        public Criteria andBirthDayLike(String value) {
+            addCriterion("birth_day like", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayNotIn(List<Date> values) {
-            addCriterionForJDBCDate("birth_day not in", values, "birthDay");
+        public Criteria andBirthDayNotLike(String value) {
+            addCriterion("birth_day not like", value, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("birth_day between", value1, value2, "birthDay");
+        public Criteria andBirthDayIn(List<String> values) {
+            addCriterion("birth_day in", values, "birthDay");
             return (Criteria) this;
         }
 
-        public Criteria andBirthDayNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("birth_day not between", value1, value2, "birthDay");
+        public Criteria andBirthDayNotIn(List<String> values) {
+            addCriterion("birth_day not in", values, "birthDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthDayBetween(String value1, String value2) {
+            addCriterion("birth_day between", value1, value2, "birthDay");
+            return (Criteria) this;
+        }
+
+        public Criteria andBirthDayNotBetween(String value1, String value2) {
+            addCriterion("birth_day not between", value1, value2, "birthDay");
             return (Criteria) this;
         }
 

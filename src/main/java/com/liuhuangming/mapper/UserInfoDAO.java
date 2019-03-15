@@ -9,5 +9,4 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserInfoDAO extends MyBatisBaseDao<UserInfo, String, UserInfoExample> {
-	
 }

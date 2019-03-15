@@ -1,14 +1,13 @@
 package com.liuhuangming.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * tb_user_info
  * @author 
  */
 public class UserInfo implements Serializable {
-	/**
+    /**
      * 账号
      */
     private String account;
@@ -32,6 +31,16 @@ public class UserInfo implements Serializable {
      * 签名
      */
     private String signature;
+
+    /**
+     * 关注数
+     */
+    private Integer followerNum;
+
+    /**
+     * 粉丝数
+     */
+    private Integer fansNum;
 
     /**
      * 邮箱
@@ -90,6 +99,22 @@ public class UserInfo implements Serializable {
         this.signature = signature;
     }
 
+    public Integer getFollowerNum() {
+        return followerNum;
+    }
+
+    public void setFollowerNum(Integer followerNum) {
+        this.followerNum = followerNum;
+    }
+
+    public Integer getFansNum() {
+        return fansNum;
+    }
+
+    public void setFansNum(Integer fansNum) {
+        this.fansNum = fansNum;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -131,6 +156,8 @@ public class UserInfo implements Serializable {
             && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
             && (this.getHeadImg() == null ? other.getHeadImg() == null : this.getHeadImg().equals(other.getHeadImg()))
             && (this.getSignature() == null ? other.getSignature() == null : this.getSignature().equals(other.getSignature()))
+            && (this.getFollowerNum() == null ? other.getFollowerNum() == null : this.getFollowerNum().equals(other.getFollowerNum()))
+            && (this.getFansNum() == null ? other.getFansNum() == null : this.getFansNum().equals(other.getFansNum()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getBirthDay() == null ? other.getBirthDay() == null : this.getBirthDay().equals(other.getBirthDay()))
             && (this.getMoney() == null ? other.getMoney() == null : this.getMoney().equals(other.getMoney()));
@@ -145,6 +172,8 @@ public class UserInfo implements Serializable {
         result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
         result = prime * result + ((getHeadImg() == null) ? 0 : getHeadImg().hashCode());
         result = prime * result + ((getSignature() == null) ? 0 : getSignature().hashCode());
+        result = prime * result + ((getFollowerNum() == null) ? 0 : getFollowerNum().hashCode());
+        result = prime * result + ((getFansNum() == null) ? 0 : getFansNum().hashCode());
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getBirthDay() == null) ? 0 : getBirthDay().hashCode());
         result = prime * result + ((getMoney() == null) ? 0 : getMoney().hashCode());
@@ -162,6 +191,8 @@ public class UserInfo implements Serializable {
         sb.append(", nickName=").append(nickName);
         sb.append(", headImg=").append(headImg);
         sb.append(", signature=").append(signature);
+        sb.append(", followerNum=").append(followerNum);
+        sb.append(", fansNum=").append(fansNum);
         sb.append(", email=").append(email);
         sb.append(", birthDay=").append(birthDay);
         sb.append(", money=").append(money);
@@ -169,16 +200,4 @@ public class UserInfo implements Serializable {
         sb.append("]");
         return sb.toString();
     }
-    
-    public UserInfo(String account, String email, Integer money) {
-		super();
-		this.account = account;
-		this.email = email;
-		this.money = money;
-	}
-
-	public UserInfo() {
-		super();
-	}
-
 }
