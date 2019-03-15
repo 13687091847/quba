@@ -114,8 +114,14 @@ public class UserInfoServiceImpl implements UserInfoService{
 			//获取关注数
 			List<Follow> resultList = followDAO.selectByAccount(account);
 			if(resultList.isEmpty() == true) {
-				
+				userInfo.setFollowerNum(0);
+			}else {
+				userInfo.setFollowerNum(resultList.size());
 			}
+			//获取粉丝数
+			
+			
+			
 			
 		} catch (Exception e) {
 			// TODO: handle exception
