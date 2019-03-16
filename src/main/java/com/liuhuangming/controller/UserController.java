@@ -46,10 +46,9 @@ public class UserController {
 	 */
 	@RequestMapping("regist")
 	@ResponseBody
-	public Message regist(UserInfo userInfo, HttpSession httpSession) {
-		System.out.println(userInfo.getPassword());
+	public Message regist(UserInfo userInfo) {
 		System.out.println("regist=====>");
-		return userInfoService.regist(userInfo, httpSession);
+		return userInfoService.regist(userInfo);
 	}
 
 	/**
@@ -102,6 +101,26 @@ public class UserController {
 	public Message updateUserInfo(@RequestBody UserInfo userInfo,HttpSession httpSession) {
 		Message message = userInfoService.updateUserInfo(userInfo,httpSession);
 		return message;
+	}
+	/**
+	 * 用户退出登录
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping("quit")
+	@ResponseBody
+	public Message quit(HttpSession httpSession) {
+		return userInfoService.quit(httpSession);
+	}
+	/**
+	 * 用户注销账号
+	 * @param httpSession
+	 * @return
+	 */
+	@RequestMapping("logout")
+	@ResponseBody
+	public Message logout(HttpSession httpSession) {
+		return userInfoService.logout(httpSession);
 	}
 	/**
 	 * 测试登录

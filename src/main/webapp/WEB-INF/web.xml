@@ -12,7 +12,7 @@
 	<!-- needed for ContextLoaderListener -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:applicationContext.xml</param-value>
+		<param-value>classpath:applicationContext.xml,classpath:spring-mail.xml</param-value>
 	</context-param>
 
 	<!-- 配置spring字符编码为utf-8 -->

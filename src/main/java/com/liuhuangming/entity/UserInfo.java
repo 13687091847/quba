@@ -57,6 +57,11 @@ public class UserInfo implements Serializable {
      */
     private Integer money;
 
+    /**
+     * 是否注销，1为使用状态，0为注销状态
+     */
+    private Boolean status;
+
     private static final long serialVersionUID = 1L;
 
     public String getAccount() {
@@ -139,6 +144,14 @@ public class UserInfo implements Serializable {
         this.money = money;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -160,7 +173,8 @@ public class UserInfo implements Serializable {
             && (this.getFansNum() == null ? other.getFansNum() == null : this.getFansNum().equals(other.getFansNum()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getBirthDay() == null ? other.getBirthDay() == null : this.getBirthDay().equals(other.getBirthDay()))
-            && (this.getMoney() == null ? other.getMoney() == null : this.getMoney().equals(other.getMoney()));
+            && (this.getMoney() == null ? other.getMoney() == null : this.getMoney().equals(other.getMoney()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -177,6 +191,7 @@ public class UserInfo implements Serializable {
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getBirthDay() == null) ? 0 : getBirthDay().hashCode());
         result = prime * result + ((getMoney() == null) ? 0 : getMoney().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -196,6 +211,7 @@ public class UserInfo implements Serializable {
         sb.append(", email=").append(email);
         sb.append(", birthDay=").append(birthDay);
         sb.append(", money=").append(money);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

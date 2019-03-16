@@ -27,7 +27,7 @@ public interface UserInfoService {
 	 * @param user
 	 * @return
 	 */
-	Message regist(UserInfo user, HttpSession httpSession);
+	Message regist(UserInfo user);
 
 	/**
 	  * 用户登录
@@ -51,4 +51,16 @@ public interface UserInfoService {
 	 * @return
 	 */
 	UserInfo getAll(HttpSession httpSession);
+	/**
+	 * 用户退出登录
+	 * @param httpSession
+	 * @return
+	 */
+	Message quit(HttpSession httpSession);
+	/**
+	 * 用户注销账号
+	 * @param httpSession
+	 * @return
+	 */
+	Message logout(HttpSession httpSession);
 }

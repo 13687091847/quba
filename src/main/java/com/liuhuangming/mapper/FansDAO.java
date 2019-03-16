@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * FansDAO继承基类
  */
 @Repository
-public interface FansDAO extends MyBatisBaseDao<Fans, Fans, FansExample> {
+public interface FansDAO extends MyBatisBaseDao<Fans, Integer, FansExample> {
 }

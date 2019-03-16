@@ -2,22 +2,24 @@ package com.liuhuangming.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.liuhuangming.bean.Message;
+import com.liuhuangming.entity.Fans;
 import com.liuhuangming.entity.Follow;
-import com.liuhuangming.entity.FollowExample;
 import com.liuhuangming.entity.UserInfo;
 import com.liuhuangming.entity.UserInfoExample;
 import com.liuhuangming.entity.UserInfoExample.Criteria;
-import com.liuhuangming.mapper.FansDAO;
-import com.liuhuangming.mapper.FollowDAO;
 import com.liuhuangming.mapper.UserInfoDAO;
+import com.liuhuangming.service.FansService;
+import com.liuhuangming.service.FollowService;
 import com.liuhuangming.service.UserInfoService;
-import com.sun.tools.javac.util.List;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion.User;
+
 
 @Service
 public class UserInfoServiceImpl implements UserInfoService{
@@ -25,13 +27,12 @@ public class UserInfoServiceImpl implements UserInfoService{
 	@Autowired
 	private UserInfoDAO userInfoDAO;
 	@Autowired
-	private FollowDAO followDAO;
+	private FollowService followService;
 	@Autowired
-	private FansDAO fasDAO;
-	
+	private FansService fansService;
 	
 	/**
-	  * 验证用户是否存在
+	  * 验证用户是否存在(如果返回true则说明用户不存在，false说明存在)
 	 */
 	@Override
 	public boolean checkUser(String account) {
@@ -46,7 +47,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 	  * 用户注册
 	 */
 	@Override
-	public Message regist(UserInfo userInfo, HttpSession httpSession) {
+	public Message regist(UserInfo userInfo) {
 		// TODO Auto-generated method stub
 		Message message = new Message();
 		try {
@@ -55,10 +56,13 @@ public class UserInfoServiceImpl implements UserInfoService{
 			}else {
 				//初始化钱包金额
 				userInfo.setMoney(0);
+				userInfo.setFansNum(0);
+				userInfo.setFollowerNum(0);
+				userInfo.setStatus(true);
 				int resultCode = userInfoDAO.insert(userInfo);
 				if(resultCode > 0) {
 					message.setCode(200);
-					httpSession.setAttribute("account", userInfo.getAccount());
+					
 				}else {
 					message.setCode(500);
 				}
@@ -78,10 +82,14 @@ public class UserInfoServiceImpl implements UserInfoService{
 		// TODO Auto-generated method stub
 		Message message = new Message();
 		String password = userInfo.getPassword();
-		userInfo = userInfoDAO.selectByPrimaryKey(userInfo.getAccount());
-		if(userInfo.getPassword().equals(password)) {
-			message.setCode(200);
-			httpSession.setAttribute("account", userInfo.getAccount());
+		if(checkUser(userInfo.getAccount()) != true) {
+			userInfo = userInfoDAO.selectByPrimaryKey(userInfo.getAccount());
+			if(userInfo.getPassword().equals(password) && userInfo.getStatus().equals(true)) {
+				message.setCode(200);
+				httpSession.setAttribute("account", userInfo.getAccount());
+			}else {
+				message.setCode(500);
+			}
 		}else {
 			message.setCode(500);
 		}
@@ -94,6 +102,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 	public Object isLogin(HttpSession httpSession) {
 		// TODO Auto-generated method stub
 		String account = (String)httpSession.getAttribute("account");
+		System.out.println(account+new Date());
 		if(account != null) {
 			UserInfo userInfo = getAll(httpSession);
 			return userInfo;
@@ -112,17 +121,19 @@ public class UserInfoServiceImpl implements UserInfoService{
 			String account = (String)httpSession.getAttribute("account");
 			userInfo = userInfoDAO.selectByPrimaryKey(account);
 			//获取关注数
-			List<Follow> resultList = followDAO.selectByAccount(account);
-			if(resultList.isEmpty() == true) {
+			List<Follow> followsList = followService.getAll(account);
+			if(followsList.isEmpty() == true) {
 				userInfo.setFollowerNum(0);
 			}else {
-				userInfo.setFollowerNum(resultList.size());
+				userInfo.setFollowerNum(followsList.size());
 			}
 			//获取粉丝数
-			
-			
-			
-			
+			List<Fans> fansList = fansService.getAll(account);
+			if(fansList.isEmpty() == true) {
+				userInfo.setFansNum(0);
+			}else {
+				userInfo.setFansNum(fansList.size());
+			}
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -149,6 +160,40 @@ public class UserInfoServiceImpl implements UserInfoService{
 		}else {
 			message.setCode(-101);
 			message.setMessage("修改失败");
+		}
+		return message;
+	}
+	/**
+	 * 用户退出登录
+	 */
+	@Override
+	public Message quit(HttpSession httpSession) {
+		// TODO Auto-generated method stub
+		Message message = new Message();
+		httpSession.removeAttribute("account");
+		if(httpSession.getAttribute("account") == null) {
+			message.setCode(200);
+		}else {
+			message.setCode(500);
+		}
+		return message;
+	}
+	/**
+	 * 用户注销账号
+	 */
+	@Override
+	public Message logout(HttpSession httpSession) {
+		// TODO Auto-generated method stub
+		Message message = new Message();
+		String account = (String)httpSession.getAttribute("account");
+		UserInfo userInfo = new UserInfo();
+		userInfo.setAccount(account);
+		userInfo.setStatus(false);
+		int result = userInfoDAO.updateByPrimaryKeySelective(userInfo);
+		if(result > 0) {
+			message.setCode(200);
+		}else {
+			message.setCode(500);
 		}
 		return message;
 	}

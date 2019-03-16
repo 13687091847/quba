@@ -26,7 +26,7 @@ public class Fans implements Serializable {
     /**
      * 状态：1表示当前粉丝，0表示已取消关注
      */
-    private Byte status;
+    private Boolean status;
 
     /**
      * 关注时间
@@ -64,11 +64,11 @@ public class Fans implements Serializable {
         this.follower = follower;
     }
 
-    public Byte getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

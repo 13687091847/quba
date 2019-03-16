@@ -24,7 +24,7 @@ public class Follow implements Serializable {
     private String followedUser;
 
     /**
-     * 被关注人的账号
+     * 状态，1正在关注，2取消关注
      */
     private Boolean status;
 

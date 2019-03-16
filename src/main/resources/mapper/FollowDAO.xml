@@ -98,11 +98,6 @@
     from tb_follow
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
-    select account,followed_user,create_time,update_time 
-    from tb_follow
-    where account = #{account,jdbcType=VARCHAR} and status = "1"
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from tb_follow
     where id = #{id,jdbcType=INTEGER}
