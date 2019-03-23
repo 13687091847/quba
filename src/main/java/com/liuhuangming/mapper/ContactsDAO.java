@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * ContactsDAO继承基类
  */
 @Repository
-public interface ContactsDAO extends MyBatisBaseDao<Contacts, Integer, ContactsExample> {
+public interface ContactsDAO extends MyBatisBaseDao<Contacts, String, ContactsExample> {
 }

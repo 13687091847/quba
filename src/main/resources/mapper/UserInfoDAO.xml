@@ -104,6 +104,12 @@
     from tb_user_info
     where account = #{account,jdbcType=VARCHAR}
   </select>
+  <select id="selectByPrimaryKeyWithoutPassword" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    account,nick_name,head_img,signature,follower_num,fans_num,email,birth_day,money
+    from tb_user_info
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_user_info
     where account = #{account,jdbcType=VARCHAR}

@@ -43,6 +43,11 @@ public class Comment implements Serializable {
      */
     private String headImg;
 
+    /**
+     * 状态：0表示已删除，1表示未删除
+     */
+    private Boolean status;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -101,6 +106,14 @@ public class Comment implements Serializable {
         this.headImg = headImg;
     }
 
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -119,7 +132,8 @@ public class Comment implements Serializable {
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getCommentDate() == null ? other.getCommentDate() == null : this.getCommentDate().equals(other.getCommentDate()))
             && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
-            && (this.getHeadImg() == null ? other.getHeadImg() == null : this.getHeadImg().equals(other.getHeadImg()));
+            && (this.getHeadImg() == null ? other.getHeadImg() == null : this.getHeadImg().equals(other.getHeadImg()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -133,6 +147,7 @@ public class Comment implements Serializable {
         result = prime * result + ((getCommentDate() == null) ? 0 : getCommentDate().hashCode());
         result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
         result = prime * result + ((getHeadImg() == null) ? 0 : getHeadImg().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -149,6 +164,7 @@ public class Comment implements Serializable {
         sb.append(", commentDate=").append(commentDate);
         sb.append(", nickName=").append(nickName);
         sb.append(", headImg=").append(headImg);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

@@ -9,14 +9,9 @@ import java.util.Date;
  */
 public class Strategy implements Serializable {
     /**
-     * 表id
-     */
-    private Integer id;
-
-    /**
      * 游记ID
      */
-    private Long strategyId;
+    private String strategyId;
 
     /**
      * 账号
@@ -27,11 +22,6 @@ public class Strategy implements Serializable {
      * 游记标题
      */
     private String title;
-
-    /**
-     * 游记内容
-     */
-    private String content;
 
     /**
      * 游记附图
@@ -48,21 +38,38 @@ public class Strategy implements Serializable {
      */
     private String city;
 
+    /**
+     * 点赞数
+     */
+    private Integer likeNum;
+
+    /**
+     * 收藏数
+     */
+    private Integer collectNum;
+
+    /**
+     * 评论数
+     */
+    private Integer commentNum;
+
+    /**
+     * 状态：0表示已删除，1表示未删除
+     */
+    private Boolean status;
+
+    /**
+     * 游记内容
+     */
+    private String content;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Long getStrategyId() {
+    public String getStrategyId() {
         return strategyId;
     }
 
-    public void setStrategyId(Long strategyId) {
+    public void setStrategyId(String strategyId) {
         this.strategyId = strategyId;
     }
 
@@ -80,14 +87,6 @@ public class Strategy implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
     }
 
     public String getImgSrc() {
@@ -114,6 +113,46 @@ public class Strategy implements Serializable {
         this.city = city;
     }
 
+    public Integer getLikeNum() {
+        return likeNum;
+    }
+
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
+    }
+
+    public Integer getCollectNum() {
+        return collectNum;
+    }
+
+    public void setCollectNum(Integer collectNum) {
+        this.collectNum = collectNum;
+    }
+
+    public Integer getCommentNum() {
+        return commentNum;
+    }
+
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -126,28 +165,34 @@ public class Strategy implements Serializable {
             return false;
         }
         Strategy other = (Strategy) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
+        return (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
             && (this.getTitle() == null ? other.getTitle() == null : this.getTitle().equals(other.getTitle()))
-            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getImgSrc() == null ? other.getImgSrc() == null : this.getImgSrc().equals(other.getImgSrc()))
             && (this.getUploadDate() == null ? other.getUploadDate() == null : this.getUploadDate().equals(other.getUploadDate()))
-            && (this.getCity() == null ? other.getCity() == null : this.getCity().equals(other.getCity()));
+            && (this.getCity() == null ? other.getCity() == null : this.getCity().equals(other.getCity()))
+            && (this.getLikeNum() == null ? other.getLikeNum() == null : this.getLikeNum().equals(other.getLikeNum()))
+            && (this.getCollectNum() == null ? other.getCollectNum() == null : this.getCollectNum().equals(other.getCollectNum()))
+            && (this.getCommentNum() == null ? other.getCommentNum() == null : this.getCommentNum().equals(other.getCommentNum()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getTitle() == null) ? 0 : getTitle().hashCode());
-        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getImgSrc() == null) ? 0 : getImgSrc().hashCode());
         result = prime * result + ((getUploadDate() == null) ? 0 : getUploadDate().hashCode());
         result = prime * result + ((getCity() == null) ? 0 : getCity().hashCode());
+        result = prime * result + ((getLikeNum() == null) ? 0 : getLikeNum().hashCode());
+        result = prime * result + ((getCollectNum() == null) ? 0 : getCollectNum().hashCode());
+        result = prime * result + ((getCommentNum() == null) ? 0 : getCommentNum().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         return result;
     }
 
@@ -157,14 +202,17 @@ public class Strategy implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
         sb.append(", strategyId=").append(strategyId);
         sb.append(", account=").append(account);
         sb.append(", title=").append(title);
-        sb.append(", content=").append(content);
         sb.append(", imgSrc=").append(imgSrc);
         sb.append(", uploadDate=").append(uploadDate);
         sb.append(", city=").append(city);
+        sb.append(", likeNum=").append(likeNum);
+        sb.append(", collectNum=").append(collectNum);
+        sb.append(", commentNum=").append(commentNum);
+        sb.append(", status=").append(status);
+        sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

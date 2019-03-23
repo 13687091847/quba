@@ -1,22 +1,15 @@
-package com.liuhuangming.controller;
+package com.liuhuangming.bean;
 
 import javax.annotation.Resource;
-import javax.mail.MessagingException;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-
-@Controller
-@RequestMapping("testEmail")
-public class TestController {
+public class SendEmail {
 	@Resource(name = "mailSender")
 	JavaMailSenderImpl mailSender;
-
-	@RequestMapping(path = "/sendword")
-	public void handle(){
+	
+	public void sendText(String email,int code) {
 		SimpleMailMessage mailMessage = new SimpleMailMessage();
 		mailMessage.setTo("357066443@qq.com");
 		mailMessage.setFrom("357066443@qq.com");

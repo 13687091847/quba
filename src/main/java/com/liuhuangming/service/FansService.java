@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.liuhuangming.entity.Fans;
 
-
 public interface FansService {
 
 	/**

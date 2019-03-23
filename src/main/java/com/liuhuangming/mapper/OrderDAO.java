@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * OrderDAO继承基类
  */
 @Repository
-public interface OrderDAO extends MyBatisBaseDao<Order, Long, OrderExample> {
+public interface OrderDAO extends MyBatisBaseDao<Order, String, OrderExample> {
 }

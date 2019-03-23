@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuhuangming.mapper.ContactsDAO">
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Contacts">
-    <id column="id" jdbcType="INTEGER" property="id" />
+    <id column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
-    <result column="id_card" jdbcType="VARCHAR" property="idCard" />
     <result column="status" jdbcType="BIT" property="status" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, contact_name, id_card, `status`
+    id_card, account, contact_name, `status`, phone
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.ContactsExample" resultMap="BaseResultMap">
     select
@@ -91,15 +91,15 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_contacts
-    where id = #{id,jdbcType=INTEGER}
+    where id_card = #{idCard,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_contacts
-    where id = #{id,jdbcType=INTEGER}
+    where id_card = #{idCard,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.liuhuangming.entity.ContactsExample">
     delete from tb_contacts
@@ -108,16 +108,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Contacts">
-    insert into tb_contacts (id, account, contact_name, 
-      id_card, `status`)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, 
-      #{idCard,jdbcType=VARCHAR}, #{status,jdbcType=BIT})
+    insert into tb_contacts (id_card, account, contact_name, 
+      `status`, phone)
+    values (#{idCard,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{contactName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT}, #{phone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Contacts">
     insert into tb_contacts
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="idCard != null">
+        id_card,
       </if>
       <if test="account != null">
         account,
@@ -125,16 +125,16 @@
       <if test="contactName != null">
         contact_name,
       </if>
-      <if test="idCard != null">
-        id_card,
-      </if>
       <if test="status != null">
         `status`,
       </if>
+      <if test="phone != null">
+        phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+      <if test="idCard != null">
+        #{idCard,jdbcType=VARCHAR},
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
@@ -142,11 +142,11 @@
       <if test="contactName != null">
         #{contactName,jdbcType=VARCHAR},
       </if>
-      <if test="idCard != null">
-        #{idCard,jdbcType=VARCHAR},
-      </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -159,8 +159,8 @@
   <update id="updateByExampleSelective" parameterType="map">
     update tb_contacts
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.idCard != null">
+        id_card = #{record.idCard,jdbcType=VARCHAR},
       </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
@@ -168,11 +168,11 @@
       <if test="record.contactName != null">
         contact_name = #{record.contactName,jdbcType=VARCHAR},
       </if>
-      <if test="record.idCard != null">
-        id_card = #{record.idCard,jdbcType=VARCHAR},
-      </if>
       <if test="record.status != null">
         `status` = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -181,11 +181,11 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update tb_contacts
-    set id = #{record.id,jdbcType=INTEGER},
+    set id_card = #{record.idCard,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       contact_name = #{record.contactName,jdbcType=VARCHAR},
-      id_card = #{record.idCard,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=BIT}
+      `status` = #{record.status,jdbcType=BIT},
+      phone = #{record.phone,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -199,21 +199,21 @@
       <if test="contactName != null">
         contact_name = #{contactName,jdbcType=VARCHAR},
       </if>
-      <if test="idCard != null">
-        id_card = #{idCard,jdbcType=VARCHAR},
-      </if>
       <if test="status != null">
         `status` = #{status,jdbcType=BIT},
       </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id_card = #{idCard,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Contacts">
     update tb_contacts
     set account = #{account,jdbcType=VARCHAR},
       contact_name = #{contactName,jdbcType=VARCHAR},
-      id_card = #{idCard,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=BIT}
-    where id = #{id,jdbcType=INTEGER}
+      `status` = #{status,jdbcType=BIT},
+      phone = #{phone,jdbcType=VARCHAR}
+    where id_card = #{idCard,jdbcType=VARCHAR}
   </update>
 </mapper>

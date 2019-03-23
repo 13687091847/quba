@@ -11,7 +11,7 @@ public class Order implements Serializable {
     /**
      * 订单ID
      */
-    private Long orderId;
+    private String orderId;
 
     /**
      * 账号
@@ -40,11 +40,11 @@ public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public Long getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
 

@@ -2,14 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuhuangming.mapper.StrategyDAO">
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Strategy">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="strategy_id" jdbcType="BIGINT" property="strategyId" />
+    <id column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="img_src" jdbcType="VARCHAR" property="imgSrc" />
     <result column="upload_date" jdbcType="TIMESTAMP" property="uploadDate" />
     <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
+    <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="status" jdbcType="BIT" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.liuhuangming.entity.Strategy">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,8 +75,36 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, strategy_id, account, title, content, img_src, upload_date, city
+    strategy_id, account, title, img_src, upload_date, city, like_num, collect_num, comment_num, 
+    `status`
   </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.liuhuangming.entity.StrategyExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_strategy
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.StrategyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -94,15 +127,17 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
     from tb_strategy
-    where id = #{id,jdbcType=INTEGER}
+    where strategy_id = #{strategyId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_strategy
-    where id = #{id,jdbcType=INTEGER}
+    where strategy_id = #{strategyId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.liuhuangming.entity.StrategyExample">
     delete from tb_strategy
@@ -111,19 +146,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Strategy">
-    insert into tb_strategy (id, strategy_id, account, 
-      title, content, img_src, 
-      upload_date, city)
-    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{imgSrc,jdbcType=VARCHAR}, 
-      #{uploadDate,jdbcType=TIMESTAMP}, #{city,jdbcType=VARCHAR})
+    insert into tb_strategy (strategy_id, account, title, 
+      img_src, upload_date, city, 
+      like_num, collect_num, comment_num, 
+      `status`, content)
+    values (#{strategyId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{imgSrc,jdbcType=VARCHAR}, #{uploadDate,jdbcType=TIMESTAMP}, #{city,jdbcType=VARCHAR}, 
+      #{likeNum,jdbcType=INTEGER}, #{collectNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Strategy">
     insert into tb_strategy
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
       <if test="strategyId != null">
         strategy_id,
       </if>
@@ -132,9 +166,6 @@
       </if>
       <if test="title != null">
         title,
-      </if>
-      <if test="content != null">
-        content,
       </if>
       <if test="imgSrc != null">
         img_src,
@@ -145,22 +176,31 @@
       <if test="city != null">
         city,
       </if>
+      <if test="likeNum != null">
+        like_num,
+      </if>
+      <if test="collectNum != null">
+        collect_num,
+      </if>
+      <if test="commentNum != null">
+        comment_num,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="strategyId != null">
-        #{strategyId,jdbcType=BIGINT},
+        #{strategyId,jdbcType=VARCHAR},
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
       </if>
       <if test="imgSrc != null">
         #{imgSrc,jdbcType=VARCHAR},
@@ -170,6 +210,21 @@
       </if>
       <if test="city != null">
         #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="likeNum != null">
+        #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null">
+        #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -182,20 +237,14 @@
   <update id="updateByExampleSelective" parameterType="map">
     update tb_strategy
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
-      </if>
       <if test="record.strategyId != null">
-        strategy_id = #{record.strategyId,jdbcType=BIGINT},
+        strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
       </if>
       <if test="record.title != null">
         title = #{record.title,jdbcType=VARCHAR},
-      </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
       </if>
       <if test="record.imgSrc != null">
         img_src = #{record.imgSrc,jdbcType=VARCHAR},
@@ -206,21 +255,55 @@
       <if test="record.city != null">
         city = #{record.city,jdbcType=VARCHAR},
       </if>
+      <if test="record.likeNum != null">
+        like_num = #{record.likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.collectNum != null">
+        collect_num = #{record.collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.commentNum != null">
+        comment_num = #{record.commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tb_strategy
+    set strategy_id = #{record.strategyId,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      img_src = #{record.imgSrc,jdbcType=VARCHAR},
+      upload_date = #{record.uploadDate,jdbcType=TIMESTAMP},
+      city = #{record.city,jdbcType=VARCHAR},
+      like_num = #{record.likeNum,jdbcType=INTEGER},
+      collect_num = #{record.collectNum,jdbcType=INTEGER},
+      comment_num = #{record.commentNum,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=BIT},
+      content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
     update tb_strategy
-    set id = #{record.id,jdbcType=INTEGER},
-      strategy_id = #{record.strategyId,jdbcType=BIGINT},
+    set strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=VARCHAR},
       img_src = #{record.imgSrc,jdbcType=VARCHAR},
       upload_date = #{record.uploadDate,jdbcType=TIMESTAMP},
-      city = #{record.city,jdbcType=VARCHAR}
+      city = #{record.city,jdbcType=VARCHAR},
+      like_num = #{record.likeNum,jdbcType=INTEGER},
+      collect_num = #{record.collectNum,jdbcType=INTEGER},
+      comment_num = #{record.commentNum,jdbcType=INTEGER},
+      `status` = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -228,17 +311,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Strategy">
     update tb_strategy
     <set>
-      <if test="strategyId != null">
-        strategy_id = #{strategyId,jdbcType=BIGINT},
-      </if>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="title != null">
         title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
       </if>
       <if test="imgSrc != null">
         img_src = #{imgSrc,jdbcType=VARCHAR},
@@ -249,18 +326,49 @@
       <if test="city != null">
         city = #{city,jdbcType=VARCHAR},
       </if>
+      <if test="likeNum != null">
+        like_num = #{likeNum,jdbcType=INTEGER},
+      </if>
+      <if test="collectNum != null">
+        collect_num = #{collectNum,jdbcType=INTEGER},
+      </if>
+      <if test="commentNum != null">
+        comment_num = #{commentNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where strategy_id = #{strategyId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.liuhuangming.entity.Strategy">
+    update tb_strategy
+    set account = #{account,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      img_src = #{imgSrc,jdbcType=VARCHAR},
+      upload_date = #{uploadDate,jdbcType=TIMESTAMP},
+      city = #{city,jdbcType=VARCHAR},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      collect_num = #{collectNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=BIT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where strategy_id = #{strategyId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Strategy">
     update tb_strategy
-    set strategy_id = #{strategyId,jdbcType=BIGINT},
-      account = #{account,jdbcType=VARCHAR},
+    set account = #{account,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
       img_src = #{imgSrc,jdbcType=VARCHAR},
       upload_date = #{uploadDate,jdbcType=TIMESTAMP},
-      city = #{city,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
+      city = #{city,jdbcType=VARCHAR},
+      like_num = #{likeNum,jdbcType=INTEGER},
+      collect_num = #{collectNum,jdbcType=INTEGER},
+      comment_num = #{commentNum,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=BIT}
+    where strategy_id = #{strategyId,jdbcType=VARCHAR}
   </update>
 </mapper>

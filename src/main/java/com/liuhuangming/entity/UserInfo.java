@@ -64,7 +64,12 @@ public class UserInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    public String getAccount() {
+    
+    public UserInfo() {
+		super();
+	}
+
+	public String getAccount() {
         return account;
     }
 

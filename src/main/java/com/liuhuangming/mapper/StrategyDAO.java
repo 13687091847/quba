@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
  * StrategyDAO继承基类
  */
 @Repository
-public interface StrategyDAO extends MyBatisBaseDao<Strategy, Integer, StrategyExample> {
+public interface StrategyDAO extends MyBatisBaseDao<Strategy, String, StrategyExample> {
 }

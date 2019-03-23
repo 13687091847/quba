@@ -8,9 +8,9 @@ import java.io.Serializable;
  */
 public class Contacts implements Serializable {
     /**
-     * 表ID
+     * 身份证号码
      */
-    private Integer id;
+    private String idCard;
 
     /**
      * 账号
@@ -23,23 +23,23 @@ public class Contacts implements Serializable {
     private String contactName;
 
     /**
-     * 身份证号码
-     */
-    private String idCard;
-
-    /**
-     * 状态（0：待核验；1：已核验）
+     * 状态（0：已删除；1：未删除）
      */
     private Boolean status;
 
+    /**
+     * 手机号码
+     */
+    private String phone;
+
     private static final long serialVersionUID = 1L;
 
-    public Integer getId() {
-        return id;
+    public String getIdCard() {
+        return idCard;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
     }
 
     public String getAccount() {
@@ -58,20 +58,20 @@ public class Contacts implements Serializable {
         this.contactName = contactName;
     }
 
-    public String getIdCard() {
-        return idCard;
-    }
-
-    public void setIdCard(String idCard) {
-        this.idCard = idCard;
-    }
-
     public Boolean getStatus() {
         return status;
     }
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     @Override
@@ -86,22 +86,22 @@ public class Contacts implements Serializable {
             return false;
         }
         Contacts other = (Contacts) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getIdCard() == null ? other.getIdCard() == null : this.getIdCard().equals(other.getIdCard()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
             && (this.getContactName() == null ? other.getContactName() == null : this.getContactName().equals(other.getContactName()))
-            && (this.getIdCard() == null ? other.getIdCard() == null : this.getIdCard().equals(other.getIdCard()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getPhone() == null ? other.getPhone() == null : this.getPhone().equals(other.getPhone()));
     }
 
     @Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getIdCard() == null) ? 0 : getIdCard().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getContactName() == null) ? 0 : getContactName().hashCode());
-        result = prime * result + ((getIdCard() == null) ? 0 : getIdCard().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getPhone() == null) ? 0 : getPhone().hashCode());
         return result;
     }
 
@@ -111,11 +111,11 @@ public class Contacts implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        sb.append(", idCard=").append(idCard);
         sb.append(", account=").append(account);
         sb.append(", contactName=").append(contactName);
-        sb.append(", idCard=").append(idCard);
         sb.append(", status=").append(status);
+        sb.append(", phone=").append(phone);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

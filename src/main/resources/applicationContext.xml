@@ -13,7 +13,7 @@
     <context:component-scan base-package="com.liuhuangming.*" >
     	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-	
+
     <!-- Spring的配置文件，这里主要配置和业务逻辑有关的 -->
 	<!--=================== 数据源，事务控制，xxx ================-->
 	<context:property-placeholder location="classpath:dbconfig.properties" />
@@ -44,6 +44,25 @@
 		<!--控制住数据源  -->
 		<property name="dataSource" ref="pooledDataSource"></property>
 	</bean>
+	
+	<!--springMVC文件上传解析器-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"></bean>
+	<!--id必须是exceptionResolver这个名字，源代码中已经写死 -->
+	<!-- 上传拦截，如最大上传值及最小上传值 -->		
+	<bean id="multipartResolver"   class="org.springframework.web.multipart.commons.CommonsMultipartResolver" >   
+		  <!--定义上传的最大大小，单位为byte-->
+		  <property name="maxUploadSize">
+	          <value>104857600</value>    
+	       </property>   
+	        <property name="maxInMemorySize">    
+	            <value>4096</value>    
+	        </property>
+		  <!--指定上传的默认编码-->
+	         <property name="defaultEncoding">    
+	            <value>utf-8</value>    
+	        </property> 
+    </bean>
+	
 	
 	<!--开启基于注解的事务，使用xml配置形式的事务（必要主要的都是使用配置式）  -->
 	<aop:config>

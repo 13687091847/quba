@@ -9,6 +9,7 @@
     <result column="comment_date" jdbcType="TIMESTAMP" property="commentDate" />
     <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
     <result column="head_img" jdbcType="VARCHAR" property="headImg" />
+    <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, strategy_id, content, comment_date, nick_name, head_img
+    id, account, strategy_id, content, comment_date, nick_name, head_img, `status`
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.CommentExample" resultMap="BaseResultMap">
     select
@@ -112,10 +113,10 @@
   <insert id="insert" parameterType="com.liuhuangming.entity.Comment">
     insert into tb_comment (id, account, strategy_id, 
       content, comment_date, nick_name, 
-      head_img)
+      head_img, `status`)
     values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=VARCHAR}, 
       #{content,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP}, #{nickName,jdbcType=VARCHAR}, 
-      #{headImg,jdbcType=VARCHAR})
+      #{headImg,jdbcType=VARCHAR}, #{status,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Comment">
     insert into tb_comment
@@ -141,6 +142,9 @@
       <if test="headImg != null">
         head_img,
       </if>
+      <if test="status != null">
+        `status`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -163,6 +167,9 @@
       </if>
       <if test="headImg != null">
         #{headImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -196,6 +203,9 @@
       <if test="record.headImg != null">
         head_img = #{record.headImg,jdbcType=VARCHAR},
       </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=BIT},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -209,7 +219,8 @@
       content = #{record.content,jdbcType=VARCHAR},
       comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
       nick_name = #{record.nickName,jdbcType=VARCHAR},
-      head_img = #{record.headImg,jdbcType=VARCHAR}
+      head_img = #{record.headImg,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,6 +246,9 @@
       <if test="headImg != null">
         head_img = #{headImg,jdbcType=VARCHAR},
       </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIT},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -245,7 +259,8 @@
       content = #{content,jdbcType=VARCHAR},
       comment_date = #{commentDate,jdbcType=TIMESTAMP},
       nick_name = #{nickName,jdbcType=VARCHAR},
-      head_img = #{headImg,jdbcType=VARCHAR}
+      head_img = #{headImg,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

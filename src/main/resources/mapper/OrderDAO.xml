@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.liuhuangming.mapper.OrderDAO">
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Order">
-    <id column="order_id" jdbcType="BIGINT" property="orderId" />
+    <id column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="order_status" jdbcType="BIT" property="orderStatus" />
@@ -92,15 +92,15 @@
       </if>
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from tb_order
-    where order_id = #{orderId,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from tb_order
-    where order_id = #{orderId,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.liuhuangming.entity.OrderExample">
     delete from tb_order
@@ -112,7 +112,7 @@
     insert into tb_order (order_id, account, create_time, 
       order_status, total_price, pay_time
       )
-    values (#{orderId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+    values (#{orderId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{orderStatus,jdbcType=BIT}, #{totalPrice,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -140,7 +140,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
-        #{orderId,jdbcType=BIGINT},
+        #{orderId,jdbcType=VARCHAR},
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
@@ -169,7 +169,7 @@
     update tb_order
     <set>
       <if test="record.orderId != null">
-        order_id = #{record.orderId,jdbcType=BIGINT},
+        order_id = #{record.orderId,jdbcType=VARCHAR},
       </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
@@ -193,7 +193,7 @@
   </update>
   <update id="updateByExample" parameterType="map">
     update tb_order
-    set order_id = #{record.orderId,jdbcType=BIGINT},
+    set order_id = #{record.orderId,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       order_status = #{record.orderStatus,jdbcType=BIT},
@@ -222,7 +222,7 @@
         pay_time = #{payTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where order_id = #{orderId,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Order">
     update tb_order
@@ -231,6 +231,6 @@
       order_status = #{orderStatus,jdbcType=BIT},
       total_price = #{totalPrice,jdbcType=INTEGER},
       pay_time = #{payTime,jdbcType=TIMESTAMP}
-    where order_id = #{orderId,jdbcType=BIGINT}
+    where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
 </mapper>
