@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuhuangming.mapper.CommentDAO">
-  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Comment">
-    <id column="comment_id" jdbcType="INTEGER" property="commentId" />
+<mapper namespace="com.liuhuangming.mapper.CommentLikeDAO">
+  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.CommentLike">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="comment_id" jdbcType="INTEGER" property="commentId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="comment_date" jdbcType="TIMESTAMP" property="commentDate" />
-    <result column="like_num" jdbcType="INTEGER" property="likeNum" />
     <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    comment_id, account, strategy_id, content, comment_date, like_num, `status`
+    id, comment_id, account, `status`
   </sql>
-  <select id="selectByExample" parameterType="com.liuhuangming.entity.CommentExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuhuangming.entity.CommentLikeExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_comment
+    from t_comment_like
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -96,102 +93,73 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_comment
-    where comment_id = #{commentId,jdbcType=INTEGER}
+    from t_comment_like
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_comment
-    where comment_id = #{commentId,jdbcType=INTEGER}
+    delete from t_comment_like
+    where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.CommentExample">
-    delete from tb_comment
+  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.CommentLikeExample">
+    delete from t_comment_like
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuhuangming.entity.Comment">
-    insert into tb_comment (comment_id, account, strategy_id, 
-      content, comment_date, like_num, 
+  <insert id="insert" parameterType="com.liuhuangming.entity.CommentLike">
+    insert into t_comment_like (id, comment_id, account, 
       `status`)
-    values (#{commentId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP}, #{likeNum,jdbcType=INTEGER}, 
+    values (#{id,jdbcType=INTEGER}, #{commentId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, 
       #{status,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Comment">
-    insert into tb_comment
+  <insert id="insertSelective" parameterType="com.liuhuangming.entity.CommentLike">
+    insert into t_comment_like
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
       <if test="commentId != null">
         comment_id,
       </if>
       <if test="account != null">
         account,
       </if>
-      <if test="strategyId != null">
-        strategy_id,
-      </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="commentDate != null">
-        comment_date,
-      </if>
-      <if test="likeNum != null">
-        like_num,
-      </if>
       <if test="status != null">
         `status`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
       <if test="commentId != null">
         #{commentId,jdbcType=INTEGER},
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
       </if>
-      <if test="strategyId != null">
-        #{strategyId,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="commentDate != null">
-        #{commentDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="likeNum != null">
-        #{likeNum,jdbcType=INTEGER},
-      </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuhuangming.entity.CommentExample" resultType="java.lang.Long">
-    select count(*) from tb_comment
+  <select id="countByExample" parameterType="com.liuhuangming.entity.CommentLikeExample" resultType="java.lang.Long">
+    select count(*) from t_comment_like
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_comment
+    update t_comment_like
     <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
       <if test="record.commentId != null">
         comment_id = #{record.commentId,jdbcType=INTEGER},
       </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
-      </if>
-      <if test="record.strategyId != null">
-        strategy_id = #{record.strategyId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
-      </if>
-      <if test="record.commentDate != null">
-        comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.likeNum != null">
-        like_num = #{record.likeNum,jdbcType=INTEGER},
       </if>
       <if test="record.status != null">
         `status` = #{record.status,jdbcType=BIT},
@@ -202,50 +170,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_comment
-    set comment_id = #{record.commentId,jdbcType=INTEGER},
+    update t_comment_like
+    set id = #{record.id,jdbcType=INTEGER},
+      comment_id = #{record.commentId,jdbcType=INTEGER},
       account = #{record.account,jdbcType=VARCHAR},
-      strategy_id = #{record.strategyId,jdbcType=VARCHAR},
-      content = #{record.content,jdbcType=VARCHAR},
-      comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
-      like_num = #{record.likeNum,jdbcType=INTEGER},
       `status` = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Comment">
-    update tb_comment
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.CommentLike">
+    update t_comment_like
     <set>
+      <if test="commentId != null">
+        comment_id = #{commentId,jdbcType=INTEGER},
+      </if>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
-      </if>
-      <if test="strategyId != null">
-        strategy_id = #{strategyId,jdbcType=VARCHAR},
-      </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="commentDate != null">
-        comment_date = #{commentDate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="likeNum != null">
-        like_num = #{likeNum,jdbcType=INTEGER},
       </if>
       <if test="status != null">
         `status` = #{status,jdbcType=BIT},
       </if>
     </set>
-    where comment_id = #{commentId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Comment">
-    update tb_comment
-    set account = #{account,jdbcType=VARCHAR},
-      strategy_id = #{strategyId,jdbcType=VARCHAR},
-      content = #{content,jdbcType=VARCHAR},
-      comment_date = #{commentDate,jdbcType=TIMESTAMP},
-      like_num = #{likeNum,jdbcType=INTEGER},
+  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.CommentLike">
+    update t_comment_like
+    set comment_id = #{commentId,jdbcType=INTEGER},
+      account = #{account,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=BIT}
-    where comment_id = #{commentId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

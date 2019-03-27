@@ -4,7 +4,8 @@
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Collection">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="strategy_id" jdbcType="BIGINT" property="strategyId" />
+    <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
+    <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, strategy_id
+    id, account, strategy_id, `status`
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.CollectionExample" resultMap="BaseResultMap">
     select
@@ -106,10 +107,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Collection">
-    insert into tb_collection (id, account, strategy_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=BIGINT}
-      )
+    insert into tb_collection (id, account, strategy_id, 
+      `status`)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Collection">
     insert into tb_collection
@@ -123,6 +124,9 @@
       <if test="strategyId != null">
         strategy_id,
       </if>
+      <if test="status != null">
+        `status`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -132,7 +136,10 @@
         #{account,jdbcType=VARCHAR},
       </if>
       <if test="strategyId != null">
-        #{strategyId,jdbcType=BIGINT},
+        #{strategyId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -152,7 +159,10 @@
         account = #{record.account,jdbcType=VARCHAR},
       </if>
       <if test="record.strategyId != null">
-        strategy_id = #{record.strategyId,jdbcType=BIGINT},
+        strategy_id = #{record.strategyId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -163,7 +173,8 @@
     update tb_collection
     set id = #{record.id,jdbcType=INTEGER},
       account = #{record.account,jdbcType=VARCHAR},
-      strategy_id = #{record.strategyId,jdbcType=BIGINT}
+      strategy_id = #{record.strategyId,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -175,7 +186,10 @@
         account = #{account,jdbcType=VARCHAR},
       </if>
       <if test="strategyId != null">
-        strategy_id = #{strategyId,jdbcType=BIGINT},
+        strategy_id = #{strategyId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -183,7 +197,8 @@
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Collection">
     update tb_collection
     set account = #{account,jdbcType=VARCHAR},
-      strategy_id = #{strategyId,jdbcType=BIGINT}
+      strategy_id = #{strategyId,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

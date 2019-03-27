@@ -3,8 +3,9 @@
 <mapper namespace="com.liuhuangming.mapper.LikeDAO">
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Like">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="strategy_id" jdbcType="BIGINT" property="strategyId" />
+    <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, strategy_id, account
+    id, strategy_id, account, `status`
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.LikeExample" resultMap="BaseResultMap">
     select
@@ -106,10 +107,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Like">
-    insert into tb_like (id, strategy_id, account
-      )
-    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=BIGINT}, #{account,jdbcType=VARCHAR}
-      )
+    insert into tb_like (id, strategy_id, account, 
+      `status`)
+    values (#{id,jdbcType=INTEGER}, #{strategyId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{status,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Like">
     insert into tb_like
@@ -123,16 +124,22 @@
       <if test="account != null">
         account,
       </if>
+      <if test="status != null">
+        `status`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
       <if test="strategyId != null">
-        #{strategyId,jdbcType=BIGINT},
+        #{strategyId,jdbcType=VARCHAR},
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
       </if>
     </trim>
   </insert>
@@ -149,10 +156,13 @@
         id = #{record.id,jdbcType=INTEGER},
       </if>
       <if test="record.strategyId != null">
-        strategy_id = #{record.strategyId,jdbcType=BIGINT},
+        strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       </if>
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        `status` = #{record.status,jdbcType=BIT},
       </if>
     </set>
     <if test="_parameter != null">
@@ -162,8 +172,9 @@
   <update id="updateByExample" parameterType="map">
     update tb_like
     set id = #{record.id,jdbcType=INTEGER},
-      strategy_id = #{record.strategyId,jdbcType=BIGINT},
-      account = #{record.account,jdbcType=VARCHAR}
+      strategy_id = #{record.strategyId,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      `status` = #{record.status,jdbcType=BIT}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -172,18 +183,22 @@
     update tb_like
     <set>
       <if test="strategyId != null">
-        strategy_id = #{strategyId,jdbcType=BIGINT},
+        strategy_id = #{strategyId,jdbcType=VARCHAR},
       </if>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=BIT},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Like">
     update tb_like
-    set strategy_id = #{strategyId,jdbcType=BIGINT},
-      account = #{account,jdbcType=VARCHAR}
+    set strategy_id = #{strategyId,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

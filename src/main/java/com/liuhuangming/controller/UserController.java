@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.liuhuangming.bean.Message;
 import com.liuhuangming.entity.Contacts;
 import com.liuhuangming.entity.UserInfo;
+import com.liuhuangming.service.CollectService;
 import com.liuhuangming.service.ContactService;
+import com.liuhuangming.service.LikeService;
 import com.liuhuangming.service.UserInfoService;
 
 /**
@@ -29,6 +31,10 @@ public class UserController {
 	private UserInfoService userInfoService;
 	@Autowired
 	private ContactService contactService;
+	@Autowired
+	private LikeService likeService;
+	@Autowired
+	private CollectService collectService;
 	/**
 	 * 验证用户是否存在
 	 * 
@@ -86,6 +92,7 @@ public class UserController {
 	 */
 	@RequestMapping("getUserInfor")
 	public UserInfo getUserInfo(HttpSession httpSession) {
+		System.out.println("getUserInfor================>");
 		UserInfo userInfo = userInfoService.getAll(httpSession);
 		return userInfo;
 	}
@@ -97,6 +104,7 @@ public class UserController {
 	 */
 	@RequestMapping("quit")
 	public Message quit(HttpSession httpSession) {
+		System.out.println("quit================>");
 		return userInfoService.quit(httpSession);
 	}
 
@@ -108,6 +116,7 @@ public class UserController {
 	 */
 	@RequestMapping("logout")
 	public Message logout(HttpSession httpSession) {
+		System.out.println("logout================>");
 		return userInfoService.logout(httpSession);
 	}
 
@@ -119,6 +128,7 @@ public class UserController {
 	 */
 	@RequestMapping("checkEmail")
 	public boolean checkEmail(String email) {
+		System.out.println("checkEmail================>");
 		return userInfoService.checkEmail(email);
 	}
 
@@ -130,6 +140,7 @@ public class UserController {
 	 */
 	@RequestMapping("getCode")
 	public Message getEmailCode(String email, HttpSession httpSession) {
+		System.out.println("getCode================>");
 		return userInfoService.getEmailCode(email, httpSession);
 	}
 
@@ -142,6 +153,7 @@ public class UserController {
 	 */
 	@RequestMapping("checkCode")
 	public boolean checkCode(String code, HttpSession httpSession) {
+		System.out.println("checkCode================>");
 		return userInfoService.checkCode(code, httpSession);
 	}
 
@@ -154,6 +166,7 @@ public class UserController {
 	 */
 	@RequestMapping("resetPassWord")
 	public Message resetPassWord(String account, String password) {
+		System.out.println("resetPassWord================>");
 		return userInfoService.resetPassWord(account, password);
 	}
 
@@ -177,6 +190,7 @@ public class UserController {
 	 */
 	@RequestMapping("uploadImg")
 	public Message UploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest request,HttpSession session) {
+		System.out.println("uploadImg================>");
 		return userInfoService.uploadImg(file,session);
 	}
 	/**
@@ -186,6 +200,7 @@ public class UserController {
 	 */
 	@RequestMapping("getContacts")
 	public List<Contacts> getContacts(HttpSession session){
+		System.out.println("getContacts================>");
 		return contactService.getAll(session);
 	}
 	/**
@@ -195,6 +210,7 @@ public class UserController {
 	 */
 	@RequestMapping("addContact")
 	public Message addContact(Contacts contacts,HttpSession session){
+		System.out.println("addContact================>");
 		return contactService.addContact(contacts,session);
 	}
 	/**
@@ -205,6 +221,7 @@ public class UserController {
 	 */
 	@RequestMapping("deleteContact")
 	public Message deleteContact(String idCard,HttpSession session){
+		System.out.println("deleteContact================>");
 		return contactService.deleteContact(idCard,session);
 	}
 	/**
@@ -216,9 +233,53 @@ public class UserController {
 	 */
 	@RequestMapping("testLogin")
 	public Message testLogin(HttpSession httpSession) {
+		System.out.println("testLogin================>");
 		httpSession.setAttribute("account", "13687091847");
 		Message message = new Message();
 		message.setMessage("登录成功！");
+		message.setCode(200);
 		return message;
+	}
+	/**
+	 * 根据strategyId查询当前登录用户是否点赞该游记
+	 * @param strategyId
+	 * @return
+	 */
+	@RequestMapping("checkLike")
+	public int checkLike(String strategyId,HttpSession session) {
+		System.out.println("checkLike================>");
+		return likeService.checkLike(strategyId, session);
+	}
+	/**
+	 * 根据strategyId查询当前登录用户是否收藏该游记
+	 * @param strategyId
+	 * @return
+	 */
+	@RequestMapping("checkCollect")
+	public int checkCollect(String strategyId,HttpSession session) {
+		System.out.println("checkCollect================>");
+		return collectService.checkCollect(strategyId, session);
+	}
+	/**
+	 * 添加点赞信息
+	 * @param strategyId 游记ID
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("like")
+	public Message addLike(String strategyId,HttpSession session) {
+		System.out.println("like================>");
+		return likeService.addLike(strategyId, session);
+	}
+	/**
+	 * 添加收藏信息
+	 * @param strategyId 游记ID
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("collect")
+	public Message addCollect(String strategyId,HttpSession session) {
+		System.out.println("collect================>");
+		return collectService.addCollect(strategyId, session);
 	}
 }

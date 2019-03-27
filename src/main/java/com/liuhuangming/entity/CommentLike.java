@@ -3,27 +3,27 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 
 /**
- * tb_like
+ * t_comment_like
  * @author 
  */
-public class Like implements Serializable {
+public class CommentLike implements Serializable {
     /**
      * 表ID
      */
     private Integer id;
 
     /**
-     * 游记ID
+     * 评论ID
      */
-    private String strategyId;
+    private Integer commentId;
 
     /**
-     * 账号
+     * 点赞的账号
      */
     private String account;
 
     /**
-     * 点赞状态，1：点赞，0：取消点赞
+     * 状态：是否删除
      */
     private Boolean status;
 
@@ -37,12 +37,12 @@ public class Like implements Serializable {
         this.id = id;
     }
 
-    public String getStrategyId() {
-        return strategyId;
+    public Integer getCommentId() {
+        return commentId;
     }
 
-    public void setStrategyId(String strategyId) {
-        this.strategyId = strategyId;
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
     }
 
     public String getAccount() {
@@ -72,9 +72,9 @@ public class Like implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Like other = (Like) that;
+        CommentLike other = (CommentLike) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
-            && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
+            && (this.getCommentId() == null ? other.getCommentId() == null : this.getCommentId().equals(other.getCommentId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
@@ -84,7 +84,7 @@ public class Like implements Serializable {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
+        result = prime * result + ((getCommentId() == null) ? 0 : getCommentId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
@@ -97,7 +97,7 @@ public class Like implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", strategyId=").append(strategyId);
+        sb.append(", commentId=").append(commentId);
         sb.append(", account=").append(account);
         sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);

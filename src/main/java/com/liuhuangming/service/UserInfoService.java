@@ -98,4 +98,10 @@ public interface UserInfoService {
 	 * @return
 	 */
 	Message uploadImg(MultipartFile file,HttpSession session);
+	/**
+	 * 根据用户Id获取用户信息
+	 * @param account
+	 * @return
+	 */
+	UserInfo getUserInfoByAccount(String account);
 }

@@ -1,6 +1,5 @@
 package com.liuhuangming.service.impl;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
@@ -327,5 +326,13 @@ public class UserInfoServiceImpl implements UserInfoService {
 			// TODO: handle exception
 		}
 		return message;
+	}
+	/**
+	 * 根据用户id查询用户信息
+	 */
+	@Override
+	public UserInfo getUserInfoByAccount(String account) {
+		// TODO Auto-generated method stub
+		return userInfoDAO.selectByPrimaryKey(account);
 	}
 }

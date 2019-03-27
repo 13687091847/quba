@@ -194,52 +194,62 @@ public class LikeExample {
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdEqualTo(Long value) {
+        public Criteria andStrategyIdEqualTo(String value) {
             addCriterion("strategy_id =", value, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdNotEqualTo(Long value) {
+        public Criteria andStrategyIdNotEqualTo(String value) {
             addCriterion("strategy_id <>", value, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdGreaterThan(Long value) {
+        public Criteria andStrategyIdGreaterThan(String value) {
             addCriterion("strategy_id >", value, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdGreaterThanOrEqualTo(Long value) {
+        public Criteria andStrategyIdGreaterThanOrEqualTo(String value) {
             addCriterion("strategy_id >=", value, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdLessThan(Long value) {
+        public Criteria andStrategyIdLessThan(String value) {
             addCriterion("strategy_id <", value, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdLessThanOrEqualTo(Long value) {
+        public Criteria andStrategyIdLessThanOrEqualTo(String value) {
             addCriterion("strategy_id <=", value, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdIn(List<Long> values) {
+        public Criteria andStrategyIdLike(String value) {
+            addCriterion("strategy_id like", value, "strategyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStrategyIdNotLike(String value) {
+            addCriterion("strategy_id not like", value, "strategyId");
+            return (Criteria) this;
+        }
+
+        public Criteria andStrategyIdIn(List<String> values) {
             addCriterion("strategy_id in", values, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdNotIn(List<Long> values) {
+        public Criteria andStrategyIdNotIn(List<String> values) {
             addCriterion("strategy_id not in", values, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdBetween(Long value1, Long value2) {
+        public Criteria andStrategyIdBetween(String value1, String value2) {
             addCriterion("strategy_id between", value1, value2, "strategyId");
             return (Criteria) this;
         }
 
-        public Criteria andStrategyIdNotBetween(Long value1, Long value2) {
+        public Criteria andStrategyIdNotBetween(String value1, String value2) {
             addCriterion("strategy_id not between", value1, value2, "strategyId");
             return (Criteria) this;
         }
@@ -311,6 +321,66 @@ public class LikeExample {
 
         public Criteria andAccountNotBetween(String value1, String value2) {
             addCriterion("account not between", value1, value2, "account");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("`status` is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("`status` is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Boolean value) {
+            addCriterion("`status` =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Boolean value) {
+            addCriterion("`status` <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Boolean value) {
+            addCriterion("`status` >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Boolean value) {
+            addCriterion("`status` >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Boolean value) {
+            addCriterion("`status` <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Boolean value) {
+            addCriterion("`status` <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Boolean> values) {
+            addCriterion("`status` in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Boolean> values) {
+            addCriterion("`status` not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Boolean value1, Boolean value2) {
+            addCriterion("`status` between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Boolean value1, Boolean value2) {
+            addCriterion("`status` not between", value1, value2, "status");
             return (Criteria) this;
         }
     }

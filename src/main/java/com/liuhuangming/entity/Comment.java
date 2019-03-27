@@ -3,15 +3,17 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * tb_comment
  * @author 
  */
 public class Comment implements Serializable {
     /**
-     * 表ID
+     * 评论ID
      */
-    private Integer id;
+    private Integer commentId;
 
     /**
      * 账号
@@ -31,31 +33,40 @@ public class Comment implements Serializable {
     /**
      * 评论时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date commentDate;
 
     /**
-     * 昵称
+     * 点赞数量
      */
-    private String nickName;
-
-    /**
-     * 头像
-     */
-    private String headImg;
+    private Integer likeNum;
 
     /**
      * 状态：0表示已删除，1表示未删除
      */
     private Boolean status;
+    /**
+     * 存放评论用户的详细信息
+     */
+    private UserInfo userInfo;
+    
 
-    private static final long serialVersionUID = 1L;
+    public UserInfo getUserInfo() {
+		return userInfo;
+	}
 
-    public Integer getId() {
-        return id;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+    public Integer getCommentId() {
+        return commentId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
     }
 
     public String getAccount() {
@@ -90,20 +101,12 @@ public class Comment implements Serializable {
         this.commentDate = commentDate;
     }
 
-    public String getNickName() {
-        return nickName;
+    public Integer getLikeNum() {
+        return likeNum;
     }
 
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public String getHeadImg() {
-        return headImg;
-    }
-
-    public void setHeadImg(String headImg) {
-        this.headImg = headImg;
+    public void setLikeNum(Integer likeNum) {
+        this.likeNum = likeNum;
     }
 
     public Boolean getStatus() {
@@ -126,13 +129,12 @@ public class Comment implements Serializable {
             return false;
         }
         Comment other = (Comment) that;
-        return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
+        return (this.getCommentId() == null ? other.getCommentId() == null : this.getCommentId().equals(other.getCommentId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
             && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getCommentDate() == null ? other.getCommentDate() == null : this.getCommentDate().equals(other.getCommentDate()))
-            && (this.getNickName() == null ? other.getNickName() == null : this.getNickName().equals(other.getNickName()))
-            && (this.getHeadImg() == null ? other.getHeadImg() == null : this.getHeadImg().equals(other.getHeadImg()))
+            && (this.getLikeNum() == null ? other.getLikeNum() == null : this.getLikeNum().equals(other.getLikeNum()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
@@ -140,13 +142,12 @@ public class Comment implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result + ((getCommentId() == null) ? 0 : getCommentId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getCommentDate() == null) ? 0 : getCommentDate().hashCode());
-        result = prime * result + ((getNickName() == null) ? 0 : getNickName().hashCode());
-        result = prime * result + ((getHeadImg() == null) ? 0 : getHeadImg().hashCode());
+        result = prime * result + ((getLikeNum() == null) ? 0 : getLikeNum().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
@@ -157,13 +158,12 @@ public class Comment implements Serializable {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
+        sb.append(", commentId=").append(commentId);
         sb.append(", account=").append(account);
         sb.append(", strategyId=").append(strategyId);
         sb.append(", content=").append(content);
         sb.append(", commentDate=").append(commentDate);
-        sb.append(", nickName=").append(nickName);
-        sb.append(", headImg=").append(headImg);
+        sb.append(", likeNum=").append(likeNum);
         sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

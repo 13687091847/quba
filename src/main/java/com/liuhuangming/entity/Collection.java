@@ -20,7 +20,12 @@ public class Collection implements Serializable {
     /**
      * 游记ID
      */
-    private Long strategyId;
+    private String strategyId;
+
+    /**
+     * 收藏状态，0：取消收藏，1：收藏
+     */
+    private Boolean status;
 
     private static final long serialVersionUID = 1L;
 
@@ -40,12 +45,20 @@ public class Collection implements Serializable {
         this.account = account;
     }
 
-    public Long getStrategyId() {
+    public String getStrategyId() {
         return strategyId;
     }
 
-    public void setStrategyId(Long strategyId) {
+    public void setStrategyId(String strategyId) {
         this.strategyId = strategyId;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
     }
 
     @Override
@@ -62,7 +75,8 @@ public class Collection implements Serializable {
         Collection other = (Collection) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
-            && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()));
+            && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
+            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
     }
 
     @Override
@@ -72,6 +86,7 @@ public class Collection implements Serializable {
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
+        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -84,6 +99,7 @@ public class Collection implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", account=").append(account);
         sb.append(", strategyId=").append(strategyId);
+        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

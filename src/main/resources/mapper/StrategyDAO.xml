@@ -13,6 +13,7 @@
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="status" jdbcType="BIT" property="status" />
   </resultMap>
+  
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.liuhuangming.entity.Strategy">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>

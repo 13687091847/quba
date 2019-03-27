@@ -1,5 +1,7 @@
 package com.liuhuangming.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import com.liuhuangming.bean.Message;
@@ -26,4 +28,28 @@ public interface StrategyService {
 	 * @return
 	 */
 	boolean checkStrategy(Strategy strategy,HttpSession session);
-}
+	/**
+	 * 获取当前登录用户的所有游记
+	 * @param session
+	 * @return
+	 */
+	List<Strategy> getMyStrategy(HttpSession session);
+	/**
+	 * 根据游记ID删除游记
+	 * @param strategyId
+	 * @return
+	 */
+	Message deleteStrategy(String strategyId);
+	/**
+	 * 更新游记信息
+	 * @param strategy
+	 * @return
+	 */
+	int updateStrategy(Strategy strategy);
+	/**
+	 * 根据游记ID获取游记信息
+	 * @param strtegyId
+	 * @return
+	 */
+	Strategy selectByStrategyId(String strategyId);
+} 

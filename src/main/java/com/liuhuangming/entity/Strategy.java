@@ -3,6 +3,10 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * tb_strategy
  * @author 
@@ -31,6 +35,7 @@ public class Strategy implements Serializable {
     /**
      * 游记上传时间
      */
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date uploadDate;
 
     /**
@@ -61,9 +66,23 @@ public class Strategy implements Serializable {
     /**
      * 游记内容
      */
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+    
+    /**
+     * 用来存放作者的信息,数据库无此字段
+     */
+    private UserInfo userInfo;
+    
+    public UserInfo getUserInfo() {
+		return userInfo;
+	}
 
-    private static final long serialVersionUID = 1L;
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public String getStrategyId() {
         return strategyId;
