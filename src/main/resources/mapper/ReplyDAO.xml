@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuhuangming.mapper.FansDAO">
-  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Fans">
+<mapper namespace="com.liuhuangming.mapper.ReplyDAO">
+  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Reply">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="follower" jdbcType="VARCHAR" property="follower" />
-    <result column="status" jdbcType="BIT" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="commentId" jdbcType="INTEGER" property="commentid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="reply" jdbcType="TIMESTAMP" property="reply" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,15 +67,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, follower, `status`, create_time, update_time
+    id, account, commentId, content, reply
   </sql>
-  <select id="selectByExample" parameterType="com.liuhuangming.entity.FansExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuhuangming.entity.ReplyExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_fans
+    from tb_reply
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -95,29 +94,27 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_fans
+    from tb_reply
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_fans
+    delete from tb_reply
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.FansExample">
-    delete from tb_fans
+  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.ReplyExample">
+    delete from tb_reply
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuhuangming.entity.Fans">
-    insert into tb_fans (id, account, follower, 
-      `status`, create_time, update_time
-      )
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{follower,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
-      )
+  <insert id="insert" parameterType="com.liuhuangming.entity.Reply">
+    insert into tb_reply (id, account, commentId, 
+      content, reply)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{commentid,jdbcType=INTEGER}, 
+      #{content,jdbcType=VARCHAR}, #{reply,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Fans">
-    insert into tb_fans
+  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Reply">
+    insert into tb_reply
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -125,17 +122,14 @@
       <if test="account != null">
         account,
       </if>
-      <if test="follower != null">
-        follower,
+      <if test="commentid != null">
+        commentId,
       </if>
-      <if test="status != null">
-        `status`,
+      <if test="content != null">
+        content,
       </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
+      <if test="reply != null">
+        reply,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -145,28 +139,25 @@
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
       </if>
-      <if test="follower != null">
-        #{follower,jdbcType=VARCHAR},
+      <if test="commentid != null">
+        #{commentid,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="reply != null">
+        #{reply,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuhuangming.entity.FansExample" resultType="java.lang.Long">
-    select count(*) from tb_fans
+  <select id="countByExample" parameterType="com.liuhuangming.entity.ReplyExample" resultType="java.lang.Long">
+    select count(*) from tb_reply
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_fans
+    update tb_reply
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
@@ -174,17 +165,14 @@
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
       </if>
-      <if test="record.follower != null">
-        follower = #{record.follower,jdbcType=VARCHAR},
+      <if test="record.commentid != null">
+        commentId = #{record.commentid,jdbcType=INTEGER},
       </if>
-      <if test="record.status != null">
-        `status` = #{record.status,jdbcType=BIT},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="record.updateTime != null">
-        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      <if test="record.reply != null">
+        reply = #{record.reply,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -192,45 +180,40 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_fans
+    update tb_reply
     set id = #{record.id,jdbcType=INTEGER},
       account = #{record.account,jdbcType=VARCHAR},
-      follower = #{record.follower,jdbcType=VARCHAR},
-      `status` = #{record.status,jdbcType=BIT},
-      create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      commentId = #{record.commentid,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      reply = #{record.reply,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Fans">
-    update tb_fans
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Reply">
+    update tb_reply
     <set>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
       </if>
-      <if test="follower != null">
-        follower = #{follower,jdbcType=VARCHAR},
+      <if test="commentid != null">
+        commentId = #{commentid,jdbcType=INTEGER},
       </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=BIT},
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="reply != null">
+        reply = #{reply,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Fans">
-    update tb_fans
+  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Reply">
+    update tb_reply
     set account = #{account,jdbcType=VARCHAR},
-      follower = #{follower,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=BIT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      commentId = #{commentid,jdbcType=INTEGER},
+      content = #{content,jdbcType=VARCHAR},
+      reply = #{reply,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

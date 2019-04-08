@@ -3,6 +3,8 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * tb_search
  * @author 
@@ -26,6 +28,7 @@ public class Search implements Serializable {
     /**
      * 搜索时间
      */
+    @JsonFormat(pattern="MM-dd HH:mm:ss",timezone="GMT+8")
     private Date searchTime;
 
     private static final long serialVersionUID = 1L;

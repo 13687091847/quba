@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import com.liuhuangming.bean.Message;
+import com.github.pagehelper.PageInfo;
+import com.liuhuangming.bean.Mes;
 import com.liuhuangming.entity.Strategy;
 
 /**
@@ -20,7 +21,7 @@ public interface StrategyService {
 	 * @param session
 	 * @return
 	 */
-	Message addStrategy(Strategy strategy,HttpSession session);
+	Mes addStrategy(Strategy strategy,HttpSession session);
 	/**
 	 * 查看用户该游记是否已经发送
 	 * @param strategy
@@ -39,7 +40,7 @@ public interface StrategyService {
 	 * @param strategyId
 	 * @return
 	 */
-	Message deleteStrategy(String strategyId);
+	Mes deleteStrategy(String strategyId);
 	/**
 	 * 更新游记信息
 	 * @param strategy
@@ -52,4 +53,38 @@ public interface StrategyService {
 	 * @return
 	 */
 	Strategy selectByStrategyId(String strategyId);
+	/**
+	 * 统计对应用户发表的游记数量
+	 * @param account
+	 * @return
+	 */
+	long countByAccount(String account);
+	/**
+	 * 通过用户账号获取其对应的游记
+	 * @param account
+	 * @return
+	 */
+	List<Strategy> getStrategyByAccount(String account);
+	/**
+	 * 获取所有的游记
+	 * @return
+	 */
+	PageInfo<Strategy> getAll(Integer pageNum,Integer pageSize);
+	/**
+	 * 获取管理员推荐的游记
+	 * @return
+	 */
+	List<Strategy> getRecommendStrategy();
+	/**
+	 * 根据标题模糊查询游记
+	 * @param title
+	 * @return
+	 */
+	List<Strategy> getStrategyByTitle(String title);
+	/**
+	 * 增加浏览次数
+	 * @param strategyId
+	 * @return
+	 */
+	int addBrowseVolume(String strategyId);
 } 

@@ -12,8 +12,8 @@
     <result column="collect_num" jdbcType="INTEGER" property="collectNum" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
     <result column="status" jdbcType="BIT" property="status" />
+    <result column="browse_volume" jdbcType="INTEGER" property="browseVolume" />
   </resultMap>
-  
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.liuhuangming.entity.Strategy">
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
@@ -77,7 +77,7 @@
   </sql>
   <sql id="Base_Column_List">
     strategy_id, account, title, img_src, upload_date, city, like_num, collect_num, comment_num, 
-    `status`
+    `status`, browse_volume
   </sql>
   <sql id="Blob_Column_List">
     content
@@ -150,11 +150,13 @@
     insert into tb_strategy (strategy_id, account, title, 
       img_src, upload_date, city, 
       like_num, collect_num, comment_num, 
-      `status`, content)
+      `status`, browse_volume, content
+      )
     values (#{strategyId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
       #{imgSrc,jdbcType=VARCHAR}, #{uploadDate,jdbcType=TIMESTAMP}, #{city,jdbcType=VARCHAR}, 
       #{likeNum,jdbcType=INTEGER}, #{collectNum,jdbcType=INTEGER}, #{commentNum,jdbcType=INTEGER}, 
-      #{status,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
+      #{status,jdbcType=BIT}, #{browseVolume,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Strategy">
     insert into tb_strategy
@@ -188,6 +190,9 @@
       </if>
       <if test="status != null">
         `status`,
+      </if>
+      <if test="browseVolume != null">
+        browse_volume,
       </if>
       <if test="content != null">
         content,
@@ -223,6 +228,9 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=BIT},
+      </if>
+      <if test="browseVolume != null">
+        #{browseVolume,jdbcType=INTEGER},
       </if>
       <if test="content != null">
         #{content,jdbcType=LONGVARCHAR},
@@ -268,6 +276,9 @@
       <if test="record.status != null">
         `status` = #{record.status,jdbcType=BIT},
       </if>
+      <if test="record.browseVolume != null">
+        browse_volume = #{record.browseVolume,jdbcType=INTEGER},
+      </if>
       <if test="record.content != null">
         content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
@@ -288,6 +299,7 @@
       collect_num = #{record.collectNum,jdbcType=INTEGER},
       comment_num = #{record.commentNum,jdbcType=INTEGER},
       `status` = #{record.status,jdbcType=BIT},
+      browse_volume = #{record.browseVolume,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -304,7 +316,8 @@
       like_num = #{record.likeNum,jdbcType=INTEGER},
       collect_num = #{record.collectNum,jdbcType=INTEGER},
       comment_num = #{record.commentNum,jdbcType=INTEGER},
-      `status` = #{record.status,jdbcType=BIT}
+      `status` = #{record.status,jdbcType=BIT},
+      browse_volume = #{record.browseVolume,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -339,6 +352,9 @@
       <if test="status != null">
         `status` = #{status,jdbcType=BIT},
       </if>
+      <if test="browseVolume != null">
+        browse_volume = #{browseVolume,jdbcType=INTEGER},
+      </if>
       <if test="content != null">
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -356,6 +372,7 @@
       collect_num = #{collectNum,jdbcType=INTEGER},
       comment_num = #{commentNum,jdbcType=INTEGER},
       `status` = #{status,jdbcType=BIT},
+      browse_volume = #{browseVolume,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where strategy_id = #{strategyId,jdbcType=VARCHAR}
   </update>
@@ -369,7 +386,8 @@
       like_num = #{likeNum,jdbcType=INTEGER},
       collect_num = #{collectNum,jdbcType=INTEGER},
       comment_num = #{commentNum,jdbcType=INTEGER},
-      `status` = #{status,jdbcType=BIT}
+      `status` = #{status,jdbcType=BIT},
+      browse_volume = #{browseVolume,jdbcType=INTEGER}
     where strategy_id = #{strategyId,jdbcType=VARCHAR}
   </update>
 </mapper>

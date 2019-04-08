@@ -1,8 +1,12 @@
 package com.liuhuangming.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
-import com.liuhuangming.bean.Message;
+import com.liuhuangming.bean.Mes;
+import com.liuhuangming.entity.Collection;
+import com.liuhuangming.entity.Strategy;
 
 public interface CollectService {
 
@@ -19,11 +23,23 @@ public interface CollectService {
 	 * @param session
 	 * @return
 	 */
-	Message addCollect(String strategyId,HttpSession session);
+	Mes addCollect(String strategyId,HttpSession session);
 	/**
 	 * 根据strategyId统计该游记的收藏数
 	 * @param strategyId
 	 * @return
 	 */
 	long countByStrategyId(String strategyId);
+	/**
+	 * 获取当前登录用户的收藏信息
+	 * @param session
+	 * @return
+	 */
+	List<Strategy> findByAccount(HttpSession session);
+	/**
+	 * 根据游记ID删除收藏的对应的游记（一般是收藏表中对应的游记被作者删除）
+	 * @param strategyId
+	 * @return
+	 */
+	int deleteByStrategyId(String strategyId);
 }

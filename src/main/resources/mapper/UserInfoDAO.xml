@@ -11,8 +11,7 @@
     <result column="fans_num" jdbcType="INTEGER" property="fansNum" />
     <result column="email" jdbcType="VARCHAR" property="email" />
     <result column="birth_day" jdbcType="VARCHAR" property="birthDay" />
-    <result column="money" jdbcType="INTEGER" property="money" />
-    <result column="status" jdbcType="BIT" property="status" />
+    <result column="money" jdbcType="DECIMAL" property="money" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,7 +73,7 @@
   </sql>
   <sql id="Base_Column_List">
     account, `password`, nick_name, head_img, signature, follower_num, fans_num, email, 
-    birth_day, money, `status`
+    birth_day, money
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.UserInfoExample" resultMap="BaseResultMap">
     select
@@ -124,11 +123,11 @@
     insert into tb_user_info (account, `password`, nick_name, 
       head_img, signature, follower_num, 
       fans_num, email, birth_day, 
-      money, `status`)
+      money)
     values (#{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
       #{headImg,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{followerNum,jdbcType=INTEGER}, 
       #{fansNum,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{birthDay,jdbcType=VARCHAR}, 
-      #{money,jdbcType=INTEGER}, #{status,jdbcType=BIT})
+      #{money,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.UserInfo">
     insert into tb_user_info
@@ -163,9 +162,6 @@
       <if test="money != null">
         money,
       </if>
-      <if test="status != null">
-        `status`,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="account != null">
@@ -196,10 +192,7 @@
         #{birthDay,jdbcType=VARCHAR},
       </if>
       <if test="money != null">
-        #{money,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=BIT},
+        #{money,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -240,10 +233,7 @@
         birth_day = #{record.birthDay,jdbcType=VARCHAR},
       </if>
       <if test="record.money != null">
-        money = #{record.money,jdbcType=INTEGER},
-      </if>
-      <if test="record.status != null">
-        `status` = #{record.status,jdbcType=BIT},
+        money = #{record.money,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null">
@@ -261,8 +251,7 @@
       fans_num = #{record.fansNum,jdbcType=INTEGER},
       email = #{record.email,jdbcType=VARCHAR},
       birth_day = #{record.birthDay,jdbcType=VARCHAR},
-      money = #{record.money,jdbcType=INTEGER},
-      `status` = #{record.status,jdbcType=BIT}
+      money = #{record.money,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -295,10 +284,7 @@
         birth_day = #{birthDay,jdbcType=VARCHAR},
       </if>
       <if test="money != null">
-        money = #{money,jdbcType=INTEGER},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=BIT},
+        money = #{money,jdbcType=DECIMAL},
       </if>
     </set>
     where account = #{account,jdbcType=VARCHAR}
@@ -313,8 +299,7 @@
       fans_num = #{fansNum,jdbcType=INTEGER},
       email = #{email,jdbcType=VARCHAR},
       birth_day = #{birthDay,jdbcType=VARCHAR},
-      money = #{money,jdbcType=INTEGER},
-      `status` = #{status,jdbcType=BIT}
+      money = #{money,jdbcType=DECIMAL}
     where account = #{account,jdbcType=VARCHAR}
   </update>
 </mapper>

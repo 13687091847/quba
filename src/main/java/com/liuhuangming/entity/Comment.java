@@ -33,7 +33,7 @@ public class Comment implements Serializable {
     /**
      * 评论时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="MM-dd HH:mm:ss",timezone="GMT+8")
     private Date commentDate;
 
     /**
@@ -49,9 +49,45 @@ public class Comment implements Serializable {
      * 存放评论用户的详细信息
      */
     private UserInfo userInfo;
+    /**
+     * 是否为当前登录用户的评论（数据库无此字段）
+     */
+    private boolean owner;
     
+    /**
+     * 判断当前用户是否点赞该评论
+     */
+    private boolean like;
+    /**
+     * 该条评论评论的游记
+     */
+    private Strategy strategy;
+    
+	public boolean isOwner() {
+		return owner;
+	}
 
-    public UserInfo getUserInfo() {
+	public void setOwner(boolean owner) {
+		this.owner = owner;
+	}
+
+	public boolean isLike() {
+		return like;
+	}
+
+	public void setLike(boolean like) {
+		this.like = like;
+	}
+
+	public Strategy getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(Strategy strategy) {
+		this.strategy = strategy;
+	}
+
+	public UserInfo getUserInfo() {
 		return userInfo;
 	}
 

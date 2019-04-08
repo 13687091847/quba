@@ -6,15 +6,18 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.liuhuangming.bean.Message;
+import com.liuhuangming.bean.Mes;
 import com.liuhuangming.entity.CollectionExample;
 import com.liuhuangming.entity.Like;
 import com.liuhuangming.entity.LikeExample;
 import com.liuhuangming.entity.Strategy;
 import com.liuhuangming.entity.LikeExample.Criteria;
+import com.liuhuangming.entity.Message;
 import com.liuhuangming.mapper.LikeDAO;
 import com.liuhuangming.service.LikeService;
+import com.liuhuangming.service.MessageService;
 import com.liuhuangming.service.StrategyService;
+import com.sun.mail.handlers.message_rfc822;
 
 @Service
 public class LikeServiceImpl implements LikeService {
@@ -23,20 +26,20 @@ public class LikeServiceImpl implements LikeService {
 	LikeDAO likeDAO;
 	@Autowired
 	StrategyService strategyService;
-	
+	@Autowired
+	MessageService messageService;
 	/**
 	 * 根据strategyId查询当前登录用户是否点赞该游记
 	 */
 	@Override
 	public int checkLike(String strategyId, HttpSession session) {
-		// TODO Auto-generated method stub
 		String account = (String)session.getAttribute("account");
 		LikeExample likeExample = new LikeExample();
 		Criteria criteria = likeExample.createCriteria();
 		if(account != null) {
 			criteria.andStrategyIdEqualTo(strategyId);
 			List<Like> likeList  = likeDAO.selectByExample(likeExample);
-			if(likeList.size() != 0) {
+			if(likeList != null) {
 				for(Like like : likeList) {
 					if(account.equals(like.getAccount())) {
 						//说明用户存在点赞表中
@@ -60,12 +63,15 @@ public class LikeServiceImpl implements LikeService {
 	 * 添加/删除 点赞信息
 	 */
 	@Override
-	public Message addLike(String strategyId, HttpSession session) {
-		// TODO Auto-generated method stub
+	public Mes addLike(String strategyId, HttpSession session) {
+		Mes mes = new Mes();
+		//定义一个消息对象
 		Message message = new Message();
 		Like like = new Like();
 		String account = (String)session.getAttribute("account");
 		Strategy strategy = strategyService.selectByStrategyId(strategyId);
+		//获取游记作者账号
+		String authorAccount = strategy.getAccount();
 		int updateLike = 0;
 		int updateStrategy = 0;
 		if(account != null) {
@@ -96,6 +102,17 @@ public class LikeServiceImpl implements LikeService {
 				updateLike = likeDAO.updateByExampleSelective(like, likeExample);
 				strategy.setLikeNum( strategy.getLikeNum()  + 1);
 				updateStrategy = strategyService.updateStrategy(strategy);
+				//发送系统消息给游记作者
+				if(!account.equals(authorAccount)) {
+					//自己给自己点赞不用发消息
+					message.setSendTo(authorAccount);
+					message.setSendFrom("去吧系统管理员");
+					message.setContent(account+"刚刚点赞了你的游记");
+					message.setTitle("系统消息");
+					message.setStatus((byte)0);
+					//调用消息发送函数
+					messageService.sendMessage(message);
+				}
 			}else {
 				//说明用户首次点赞
 				like.setAccount(account);
@@ -106,16 +123,27 @@ public class LikeServiceImpl implements LikeService {
 				//然后更新游记表中对应游记的点赞数量
 				strategy.setLikeNum( strategy.getLikeNum()  + 1);
 				updateStrategy = strategyService.updateStrategy(strategy);
+				//发送系统消息给游记作者
+				if(!account.equals(authorAccount)) {
+					//自己给自己点赞不用发消息
+					message.setSendTo(authorAccount);
+					message.setSendFrom("去吧系统管理员");
+					message.setContent(account+"刚刚点赞了你的游记");
+					message.setTitle("系统消息");
+					message.setStatus((byte)0);
+					//调用消息发送函数
+					messageService.sendMessage(message);
+				}
 			}
 			
 			if(updateLike > 0 && updateStrategy > 0) {
-				message.setCode(200);
+				mes.setCode(200);
 			}else {
-				message.setCode(500);
+				mes.setCode(500);
 			}
 			
 		}
-		return message;
+		return mes;
 	}
 	/**
 	 * 根据strategyId统计该游记的点赞数

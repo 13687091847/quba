@@ -3,8 +3,6 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
@@ -35,7 +33,7 @@ public class Strategy implements Serializable {
     /**
      * 游记上传时间
      */
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @JsonFormat(pattern="MM-dd HH:mm:ss",timezone="GMT+8")
     private Date uploadDate;
 
     /**
@@ -64,13 +62,17 @@ public class Strategy implements Serializable {
     private Boolean status;
 
     /**
+     * 浏览量
+     */
+    private Integer browseVolume;
+
+    /**
      * 游记内容
      */
-    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
-    
+
     /**
-     * 用来存放作者的信息,数据库无此字段
+     * 用户信息
      */
     private UserInfo userInfo;
     
@@ -164,6 +166,14 @@ public class Strategy implements Serializable {
         this.status = status;
     }
 
+    public Integer getBrowseVolume() {
+        return browseVolume;
+    }
+
+    public void setBrowseVolume(Integer browseVolume) {
+        this.browseVolume = browseVolume;
+    }
+
     public String getContent() {
         return content;
     }
@@ -194,6 +204,7 @@ public class Strategy implements Serializable {
             && (this.getCollectNum() == null ? other.getCollectNum() == null : this.getCollectNum().equals(other.getCollectNum()))
             && (this.getCommentNum() == null ? other.getCommentNum() == null : this.getCommentNum().equals(other.getCommentNum()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
+            && (this.getBrowseVolume() == null ? other.getBrowseVolume() == null : this.getBrowseVolume().equals(other.getBrowseVolume()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()));
     }
 
@@ -211,6 +222,7 @@ public class Strategy implements Serializable {
         result = prime * result + ((getCollectNum() == null) ? 0 : getCollectNum().hashCode());
         result = prime * result + ((getCommentNum() == null) ? 0 : getCommentNum().hashCode());
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
+        result = prime * result + ((getBrowseVolume() == null) ? 0 : getBrowseVolume().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         return result;
     }
@@ -231,6 +243,7 @@ public class Strategy implements Serializable {
         sb.append(", collectNum=").append(collectNum);
         sb.append(", commentNum=").append(commentNum);
         sb.append(", status=").append(status);
+        sb.append(", browseVolume=").append(browseVolume);
         sb.append(", content=").append(content);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");

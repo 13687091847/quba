@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StrategyDAO extends MyBatisBaseDao<Strategy, String, StrategyExample> {
-	
 	/**
 	 * 用来查询带有（游记内容）长文字
 	 * @param strategyExample

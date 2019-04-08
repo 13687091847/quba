@@ -1,7 +1,9 @@
 package com.liuhuangming.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * tb_order
@@ -24,21 +26,26 @@ public class Order implements Serializable {
     private Date createTime;
 
     /**
-     * 订单状态：0为未支付，1为已支付
+     * 订单状态：0为创建订单（未支付），1为已支付，-1：表示用户取消，2表示订单过期
      */
-    private Boolean orderStatus;
+    private Byte orderStatus;
 
     /**
      * 订单总金额
      */
-    private Integer totalPrice;
+    private BigDecimal totalPrice;
 
-    /**
-     * 支付时间
-     */
-    private Date payTime;
+    private List<OrderDetail> orderDetails;
+    
+    public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
 
-    private static final long serialVersionUID = 1L;
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public String getOrderId() {
         return orderId;
@@ -64,28 +71,20 @@ public class Order implements Serializable {
         this.createTime = createTime;
     }
 
-    public Boolean getOrderStatus() {
+    public Byte getOrderStatus() {
         return orderStatus;
     }
 
-    public void setOrderStatus(Boolean orderStatus) {
+    public void setOrderStatus(Byte orderStatus) {
         this.orderStatus = orderStatus;
     }
 
-    public Integer getTotalPrice() {
+    public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Integer totalPrice) {
+    public void setTotalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public Date getPayTime() {
-        return payTime;
-    }
-
-    public void setPayTime(Date payTime) {
-        this.payTime = payTime;
     }
 
     @Override
@@ -104,8 +103,7 @@ public class Order implements Serializable {
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
             && (this.getCreateTime() == null ? other.getCreateTime() == null : this.getCreateTime().equals(other.getCreateTime()))
             && (this.getOrderStatus() == null ? other.getOrderStatus() == null : this.getOrderStatus().equals(other.getOrderStatus()))
-            && (this.getTotalPrice() == null ? other.getTotalPrice() == null : this.getTotalPrice().equals(other.getTotalPrice()))
-            && (this.getPayTime() == null ? other.getPayTime() == null : this.getPayTime().equals(other.getPayTime()));
+            && (this.getTotalPrice() == null ? other.getTotalPrice() == null : this.getTotalPrice().equals(other.getTotalPrice()));
     }
 
     @Override
@@ -117,7 +115,6 @@ public class Order implements Serializable {
         result = prime * result + ((getCreateTime() == null) ? 0 : getCreateTime().hashCode());
         result = prime * result + ((getOrderStatus() == null) ? 0 : getOrderStatus().hashCode());
         result = prime * result + ((getTotalPrice() == null) ? 0 : getTotalPrice().hashCode());
-        result = prime * result + ((getPayTime() == null) ? 0 : getPayTime().hashCode());
         return result;
     }
 
@@ -132,7 +129,6 @@ public class Order implements Serializable {
         sb.append(", createTime=").append(createTime);
         sb.append(", orderStatus=").append(orderStatus);
         sb.append(", totalPrice=").append(totalPrice);
-        sb.append(", payTime=").append(payTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

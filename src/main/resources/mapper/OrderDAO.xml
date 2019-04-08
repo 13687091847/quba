@@ -5,9 +5,8 @@
     <id column="order_id" jdbcType="VARCHAR" property="orderId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="order_status" jdbcType="BIT" property="orderStatus" />
-    <result column="total_price" jdbcType="INTEGER" property="totalPrice" />
-    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="order_status" jdbcType="TINYINT" property="orderStatus" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    order_id, account, create_time, order_status, total_price, pay_time
+    order_id, account, create_time, order_status, total_price
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.OrderExample" resultMap="BaseResultMap">
     select
@@ -110,11 +109,9 @@
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Order">
     insert into tb_order (order_id, account, create_time, 
-      order_status, total_price, pay_time
-      )
+      order_status, total_price)
     values (#{orderId,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{orderStatus,jdbcType=BIT}, #{totalPrice,jdbcType=INTEGER}, #{payTime,jdbcType=TIMESTAMP}
-      )
+      #{orderStatus,jdbcType=TINYINT}, #{totalPrice,jdbcType=DECIMAL})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Order">
     insert into tb_order
@@ -134,9 +131,6 @@
       <if test="totalPrice != null">
         total_price,
       </if>
-      <if test="payTime != null">
-        pay_time,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
@@ -149,13 +143,10 @@
         #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderStatus != null">
-        #{orderStatus,jdbcType=BIT},
+        #{orderStatus,jdbcType=TINYINT},
       </if>
       <if test="totalPrice != null">
-        #{totalPrice,jdbcType=INTEGER},
-      </if>
-      <if test="payTime != null">
-        #{payTime,jdbcType=TIMESTAMP},
+        #{totalPrice,jdbcType=DECIMAL},
       </if>
     </trim>
   </insert>
@@ -178,13 +169,10 @@
         create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.orderStatus != null">
-        order_status = #{record.orderStatus,jdbcType=BIT},
+        order_status = #{record.orderStatus,jdbcType=TINYINT},
       </if>
       <if test="record.totalPrice != null">
-        total_price = #{record.totalPrice,jdbcType=INTEGER},
-      </if>
-      <if test="record.payTime != null">
-        pay_time = #{record.payTime,jdbcType=TIMESTAMP},
+        total_price = #{record.totalPrice,jdbcType=DECIMAL},
       </if>
     </set>
     <if test="_parameter != null">
@@ -196,9 +184,8 @@
     set order_id = #{record.orderId,jdbcType=VARCHAR},
       account = #{record.account,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      order_status = #{record.orderStatus,jdbcType=BIT},
-      total_price = #{record.totalPrice,jdbcType=INTEGER},
-      pay_time = #{record.payTime,jdbcType=TIMESTAMP}
+      order_status = #{record.orderStatus,jdbcType=TINYINT},
+      total_price = #{record.totalPrice,jdbcType=DECIMAL}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,13 +200,10 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="orderStatus != null">
-        order_status = #{orderStatus,jdbcType=BIT},
+        order_status = #{orderStatus,jdbcType=TINYINT},
       </if>
       <if test="totalPrice != null">
-        total_price = #{totalPrice,jdbcType=INTEGER},
-      </if>
-      <if test="payTime != null">
-        pay_time = #{payTime,jdbcType=TIMESTAMP},
+        total_price = #{totalPrice,jdbcType=DECIMAL},
       </if>
     </set>
     where order_id = #{orderId,jdbcType=VARCHAR}
@@ -228,9 +212,8 @@
     update tb_order
     set account = #{account,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      order_status = #{orderStatus,jdbcType=BIT},
-      total_price = #{totalPrice,jdbcType=INTEGER},
-      pay_time = #{payTime,jdbcType=TIMESTAMP}
+      order_status = #{orderStatus,jdbcType=TINYINT},
+      total_price = #{totalPrice,jdbcType=DECIMAL}
     where order_id = #{orderId,jdbcType=VARCHAR}
   </update>
 </mapper>

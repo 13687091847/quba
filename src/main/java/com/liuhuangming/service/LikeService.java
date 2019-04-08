@@ -2,7 +2,7 @@ package com.liuhuangming.service;
 
 import javax.servlet.http.HttpSession;
 
-import com.liuhuangming.bean.Message;
+import com.liuhuangming.bean.Mes;
 
 public interface LikeService {
 
@@ -19,7 +19,7 @@ public interface LikeService {
 	 * @param session
 	 * @return 
 	 */
-	Message addLike(String strategyId,HttpSession session);
+	Mes addLike(String strategyId,HttpSession session);
 	/**
 	 * 根据strategyId统计该游记的点赞数
 	 * @param strategyId

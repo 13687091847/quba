@@ -1,5 +1,6 @@
 package com.liuhuangming.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -7,9 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.liuhuangming.bean.Message;
-import com.liuhuangming.entity.Collection;
-import com.liuhuangming.entity.CollectionExample;
+import com.liuhuangming.bean.Mes;
 import com.liuhuangming.entity.Collection;
 import com.liuhuangming.entity.CollectionExample;
 import com.liuhuangming.entity.Strategy;
@@ -61,9 +60,9 @@ public class CollectServiceImpl implements CollectService {
 	 * 添加/删除 收藏信息
 	 */
 	@Override
-	public Message addCollect(String strategyId, HttpSession session) {
+	public Mes addCollect(String strategyId, HttpSession session) {
 		// TODO Auto-generated method stub
-		Message message = new Message();
+		Mes message = new Mes();
 		Collection collection = new Collection();
 		String account = (String)session.getAttribute("account");
 		Strategy strategy = strategyService.selectByStrategyId(strategyId);
@@ -129,6 +128,40 @@ public class CollectServiceImpl implements CollectService {
 		criteria.andStrategyIdEqualTo(strategyId);
 		criteria.andStatusEqualTo(true);
 		return collectionDAO.countByExample(collectionExample);
+	}
+	/**
+	 * 获取当前登录用户收藏信息
+	 */
+	@Override
+	public List<Strategy> findByAccount(HttpSession session) {
+		// TODO Auto-generated method stub
+		String account = (String)session.getAttribute("account");
+		List<Strategy> strategies = new ArrayList<>();
+		CollectionExample collectionExample = new CollectionExample();
+		Criteria criteria = collectionExample.createCriteria();
+		if(account != null) {
+			criteria.andAccountEqualTo(account);
+			criteria.andStatusEqualTo(true);
+			List<Collection> collections = collectionDAO.selectByExample(collectionExample);
+			for(Collection collection : collections) {
+				//获取游记ID
+				String strategyId = collection.getStrategyId();
+				//将查询到的游记信息填入集合中
+				strategies.add(strategyService.selectByStrategyId(strategyId));
+			}
+		}
+		return strategies;
+	}
+	/**
+	 * 根据游记Id删除收藏的游记
+	 */
+	@Override
+	public int deleteByStrategyId(String strategyId) {
+		// TODO Auto-generated method stub
+		CollectionExample collectionExample = new CollectionExample();
+		Criteria criteria = collectionExample.createCriteria();
+		criteria.andStrategyIdEqualTo(strategyId);
+		return collectionDAO.deleteByExample(collectionExample);
 	}
 
 }

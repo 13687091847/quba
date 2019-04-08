@@ -4,34 +4,31 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * tb_follow
+ * tb_reply
  * @author 
  */
-public class Follow implements Serializable {
-    /**
-     * 表Id
-     */
+public class Reply implements Serializable {
     private Integer id;
 
     /**
-     * 用户账号
+     * 回复该评论的用户账号
      */
     private String account;
 
     /**
-     * 关注人的账号
+     * 评论ID
      */
-    private String followedUser;
+    private Integer commentid;
 
     /**
-     * 状态，1正在关注，2取消关注
+     * 回复内容
      */
-    private Boolean status;
+    private String content;
 
     /**
-     * 更新的时间
+     * 回复时间
      */
-    private Date updateTime;
+    private Date reply;
 
     private static final long serialVersionUID = 1L;
 
@@ -51,28 +48,28 @@ public class Follow implements Serializable {
         this.account = account;
     }
 
-    public String getFollowedUser() {
-        return followedUser;
+    public Integer getCommentid() {
+        return commentid;
     }
 
-    public void setFollowedUser(String followedUser) {
-        this.followedUser = followedUser;
+    public void setCommentid(Integer commentid) {
+        this.commentid = commentid;
     }
 
-    public Boolean getStatus() {
-        return status;
+    public String getContent() {
+        return content;
     }
 
-    public void setStatus(Boolean status) {
-        this.status = status;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getReply() {
+        return reply;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setReply(Date reply) {
+        this.reply = reply;
     }
 
     @Override
@@ -86,12 +83,12 @@ public class Follow implements Serializable {
         if (getClass() != that.getClass()) {
             return false;
         }
-        Follow other = (Follow) that;
+        Reply other = (Reply) that;
         return (this.getId() == null ? other.getId() == null : this.getId().equals(other.getId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
-            && (this.getFollowedUser() == null ? other.getFollowedUser() == null : this.getFollowedUser().equals(other.getFollowedUser()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
-            && (this.getUpdateTime() == null ? other.getUpdateTime() == null : this.getUpdateTime().equals(other.getUpdateTime()));
+            && (this.getCommentid() == null ? other.getCommentid() == null : this.getCommentid().equals(other.getCommentid()))
+            && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
+            && (this.getReply() == null ? other.getReply() == null : this.getReply().equals(other.getReply()));
     }
 
     @Override
@@ -100,9 +97,9 @@ public class Follow implements Serializable {
         int result = 1;
         result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
-        result = prime * result + ((getFollowedUser() == null) ? 0 : getFollowedUser().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
-        result = prime * result + ((getUpdateTime() == null) ? 0 : getUpdateTime().hashCode());
+        result = prime * result + ((getCommentid() == null) ? 0 : getCommentid().hashCode());
+        result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
+        result = prime * result + ((getReply() == null) ? 0 : getReply().hashCode());
         return result;
     }
 
@@ -114,9 +111,9 @@ public class Follow implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
         sb.append(", account=").append(account);
-        sb.append(", followedUser=").append(followedUser);
-        sb.append(", status=").append(status);
-        sb.append(", updateTime=").append(updateTime);
+        sb.append(", commentid=").append(commentid);
+        sb.append(", content=").append(content);
+        sb.append(", reply=").append(reply);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

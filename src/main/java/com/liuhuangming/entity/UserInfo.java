@@ -1,6 +1,7 @@
 package com.liuhuangming.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * tb_user_info
@@ -55,21 +56,50 @@ public class UserInfo implements Serializable {
     /**
      * 钱包
      */
-    private Integer money;
-
-    /**
-     * 是否注销，1为使用状态，0为注销状态
-     */
-    private Boolean status;
-
-    private static final long serialVersionUID = 1L;
-
+    private BigDecimal money;
     
-    public UserInfo() {
-		super();
+    /**
+     * 临时属性(该用户相应的游记篇数)
+     */
+    private long strategyNum;
+    
+    /**
+     * 临时属性（用来判断当前用户与他关注的用户是否相互关注）
+     */
+    private Boolean followWithFollower;
+    
+    /**
+     * 临时属性（用来判断当前用户与他关注的粉丝是否相互关注）
+     */
+    private Boolean followWithFans;
+    
+	public Boolean getFollowWithFollower() {
+		return followWithFollower;
 	}
 
-	public String getAccount() {
+	public void setFollowWithFollower(Boolean followWithFollower) {
+		this.followWithFollower = followWithFollower;
+	}
+
+	public Boolean getFollowWithFans() {
+		return followWithFans;
+	}
+
+	public void setFollowWithFans(Boolean followWithFans) {
+		this.followWithFans = followWithFans;
+	}
+
+	public long getStrategyNum() {
+		return strategyNum;
+	}
+
+	public void setStrategyNum(long strategyNum) {
+		this.strategyNum = strategyNum;
+	}
+
+	private static final long serialVersionUID = 1L;
+
+    public String getAccount() {
         return account;
     }
 
@@ -141,20 +171,12 @@ public class UserInfo implements Serializable {
         this.birthDay = birthDay;
     }
 
-    public Integer getMoney() {
+    public BigDecimal getMoney() {
         return money;
     }
 
-    public void setMoney(Integer money) {
+    public void setMoney(BigDecimal money) {
         this.money = money;
-    }
-
-    public Boolean getStatus() {
-        return status;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     @Override
@@ -178,8 +200,7 @@ public class UserInfo implements Serializable {
             && (this.getFansNum() == null ? other.getFansNum() == null : this.getFansNum().equals(other.getFansNum()))
             && (this.getEmail() == null ? other.getEmail() == null : this.getEmail().equals(other.getEmail()))
             && (this.getBirthDay() == null ? other.getBirthDay() == null : this.getBirthDay().equals(other.getBirthDay()))
-            && (this.getMoney() == null ? other.getMoney() == null : this.getMoney().equals(other.getMoney()))
-            && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()));
+            && (this.getMoney() == null ? other.getMoney() == null : this.getMoney().equals(other.getMoney()));
     }
 
     @Override
@@ -196,7 +217,6 @@ public class UserInfo implements Serializable {
         result = prime * result + ((getEmail() == null) ? 0 : getEmail().hashCode());
         result = prime * result + ((getBirthDay() == null) ? 0 : getBirthDay().hashCode());
         result = prime * result + ((getMoney() == null) ? 0 : getMoney().hashCode());
-        result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         return result;
     }
 
@@ -216,7 +236,6 @@ public class UserInfo implements Serializable {
         sb.append(", email=").append(email);
         sb.append(", birthDay=").append(birthDay);
         sb.append(", money=").append(money);
-        sb.append(", status=").append(status);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

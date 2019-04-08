@@ -1,9 +1,7 @@
 package com.liuhuangming.service;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
-
+import com.github.pagehelper.PageInfo;
 import com.liuhuangming.entity.Comment;
 
 public interface CommentService {
@@ -14,13 +12,21 @@ public interface CommentService {
 	 * @param session
 	 * @return
 	 */
-	List<Comment> findByStrategyId(String strategyId);
+	PageInfo<Comment> findByStrategyId(String strategyId,HttpSession session,Integer pageNum,Integer pageSize);
 	/**
-	 * 通过用户账号获取当前登录用户的所有评论
+	 * 获取当前登录用户的所有评论
 	 * @param session
 	 * @return
 	 */
-	List<Comment> findByAccount(HttpSession session);
+	PageInfo<Comment> findMyComments(HttpSession session,int pageNum, int pageSize);
+	/**
+	 * 根据用户账号获取用户所有的评论
+	 * @param account
+	 * @param pageNum
+	 * @param pageSize
+	 * @return
+	 */
+	PageInfo<Comment> findCommentByAccount(String account,int pageNum, int pageSize);
 	/**
 	 * 添加评论
 	 * @param session
@@ -34,4 +40,16 @@ public interface CommentService {
 	 * @return
 	 */
 	int deleteComment(int commentId);
+	/**
+	 * 更新评论信息
+	 * @param comment
+	 * @return
+	 */
+	int updateComment(Comment comment);
+	/**
+	 * 通过评论id查找对应评论
+	 * @param commentId
+	 * @return
+	 */
+	Comment findByCommentId(int commentId);
 }

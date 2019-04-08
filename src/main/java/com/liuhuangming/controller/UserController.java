@@ -1,19 +1,25 @@
 package com.liuhuangming.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.liuhuangming.bean.Message;
+import com.liuhuangming.bean.Mes;
 import com.liuhuangming.entity.Contacts;
+import com.liuhuangming.entity.Order;
+import com.liuhuangming.entity.OrderDetail;
+import com.liuhuangming.entity.Strategy;
 import com.liuhuangming.entity.UserInfo;
 import com.liuhuangming.service.CollectService;
 import com.liuhuangming.service.ContactService;
+import com.liuhuangming.service.FollowService;
 import com.liuhuangming.service.LikeService;
 import com.liuhuangming.service.UserInfoService;
 
@@ -35,6 +41,8 @@ public class UserController {
 	private LikeService likeService;
 	@Autowired
 	private CollectService collectService;
+	@Autowired
+	private FollowService followService;
 	/**
 	 * 验证用户是否存在
 	 * 
@@ -54,7 +62,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("regist")
-	public Message regist(UserInfo userInfo) {
+	public Mes regist(UserInfo userInfo) {
 		System.out.println("regist=====>");
 		return userInfoService.regist(userInfo);
 	}
@@ -67,7 +75,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("login")
-	public Message login(UserInfo user, HttpSession httpSession) {
+	public Mes login(UserInfo user, HttpSession httpSession) {
 		System.out.println("lgin=====>");
 		return userInfoService.login(user, httpSession);
 	}
@@ -103,7 +111,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("quit")
-	public Message quit(HttpSession httpSession) {
+	public Mes quit(HttpSession httpSession) {
 		System.out.println("quit================>");
 		return userInfoService.quit(httpSession);
 	}
@@ -115,7 +123,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("logout")
-	public Message logout(HttpSession httpSession) {
+	public Mes logout(HttpSession httpSession) {
 		System.out.println("logout================>");
 		return userInfoService.logout(httpSession);
 	}
@@ -139,7 +147,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("getCode")
-	public Message getEmailCode(String email, HttpSession httpSession) {
+	public Mes getEmailCode(String email, HttpSession httpSession) {
 		System.out.println("getCode================>");
 		return userInfoService.getEmailCode(email, httpSession);
 	}
@@ -165,7 +173,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("resetPassWord")
-	public Message resetPassWord(String account, String password) {
+	public Mes resetPassWord(String account, String password) {
 		System.out.println("resetPassWord================>");
 		return userInfoService.resetPassWord(account, password);
 	}
@@ -178,7 +186,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("updateUserInfo")
-	public Message updateUserInfo(UserInfo userInfo,HttpSession httpSession) {
+	public Mes updateUserInfo(UserInfo userInfo,HttpSession httpSession) {
 		System.err.println("updatauserInfo============>");
 		return userInfoService.updateUserInfo(userInfo,httpSession);
 	}
@@ -189,7 +197,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("uploadImg")
-	public Message UploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest request,HttpSession session) {
+	public Mes UploadImage(@RequestParam("file") MultipartFile file, HttpServletRequest request,HttpSession session) {
 		System.out.println("uploadImg================>");
 		return userInfoService.uploadImg(file,session);
 	}
@@ -209,7 +217,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("addContact")
-	public Message addContact(Contacts contacts,HttpSession session){
+	public Mes addContact(Contacts contacts,HttpSession session){
 		System.out.println("addContact================>");
 		return contactService.addContact(contacts,session);
 	}
@@ -220,7 +228,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("deleteContact")
-	public Message deleteContact(String idCard,HttpSession session){
+	public Mes deleteContact(String idCard,HttpSession session){
 		System.out.println("deleteContact================>");
 		return contactService.deleteContact(idCard,session);
 	}
@@ -232,10 +240,10 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("testLogin")
-	public Message testLogin(HttpSession httpSession) {
+	public Mes testLogin(HttpSession httpSession) {
 		System.out.println("testLogin================>");
 		httpSession.setAttribute("account", "13687091847");
-		Message message = new Message();
+		Mes message = new Mes();
 		message.setMessage("登录成功！");
 		message.setCode(200);
 		return message;
@@ -267,7 +275,7 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("like")
-	public Message addLike(String strategyId,HttpSession session) {
+	public Mes addLike(String strategyId,HttpSession session) {
 		System.out.println("like================>");
 		return likeService.addLike(strategyId, session);
 	}
@@ -278,8 +286,140 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("collect")
-	public Message addCollect(String strategyId,HttpSession session) {
+	public Mes addCollect(String strategyId,HttpSession session) {
 		System.out.println("collect================>");
 		return collectService.addCollect(strategyId, session);
+	}
+	/**
+	 * 获取当前登录用户的收藏的游记
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("getCollections")
+	public List<Strategy> getCollections(HttpSession session) {
+		System.out.println("getCollections================>");
+		return collectService.findByAccount(session);
+	}
+	/**
+	 * 验证用户的支付密码
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("checkOrderPassWord")
+	public boolean checkOrderPassWord(HttpSession session,String password) {
+		System.out.println("checkOrderPassWord================>");
+		return userInfoService.checkOrderPassWord(session,password);
+	}
+	/**
+	 * 给用户充钱
+	 * @param session
+	 * @param money
+	 * @return
+	 */
+	@RequestMapping("addMoney")
+	public Mes addMoney(HttpSession session,BigDecimal money) {
+		System.out.println("addMoney================>");
+		return userInfoService.addMoney(money,session);
+	}
+	/**
+	 * 用户提交订单
+	 */
+	@RequestMapping("submitOrder")
+	public Mes submitOrder(HttpSession session,@RequestBody List<OrderDetail> orderDetails) {
+		System.out.println("submitOrder================>"+orderDetails.size());
+		return userInfoService.submitOrder(orderDetails,session);
+	}
+	/**
+	 * 用户支付订单
+	 * @param session
+	 * @param money
+	 * @return
+	 */
+	@RequestMapping("payOrder")
+	public Mes payOrder(HttpSession session,String orderId) {
+		System.out.println("payOrder================>");
+		return userInfoService.payOrder(orderId,session);
+	}
+	/**
+	 * 验证用户余额是否充足
+	 * @param session
+	 * @param money
+	 * @return
+	 */
+	@RequestMapping("checkMoney")
+	public boolean checkMoney(HttpSession session,BigDecimal money) {
+		System.out.println("checkMoney================>");
+		return userInfoService.checkMoney(money,session);
+	}
+	/**
+	 * 获取当前登录用户的订单
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("getMyOrders")
+	public List<Order> getMyOrders(HttpSession session) {
+		System.out.println("getMyOrders================>");
+		return userInfoService.getOrders(session);
+	}
+	/**
+	 * 用户取消订单
+	 * @param orderId
+	 * @return
+	 */
+	@RequestMapping("cancelOrder")
+	public int cancelOrder(String orderId) {
+		System.out.println("cancelOrder================>");
+		return userInfoService.cancelOrder(orderId);
+	}
+	/**
+	 * 根据用户名获取对应的所关注人的信息集合
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping("getFollowerUser")
+	public List<UserInfo> getFollowerUser(String account) {
+		System.out.println("getFollowerUser================>");
+		return userInfoService.getFollowerUser(account);
+	}
+	/**
+	 * 根据用户名获取对应粉丝信息集合
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping("getFansUser")
+	public List<UserInfo> getFansUser(String account) {
+		System.out.println("getFansUser================>");
+		return userInfoService.getFansUser(account);
+	}
+	/**
+	 * 当前登录用户关注其他人
+	 * @param followedUser
+	 * @return
+	 */
+	@RequestMapping("followOther")
+	public long followOther(String followedUser,HttpSession session) {
+		System.out.println("followOther================>");
+		return followService.followOther(followedUser,session);
+	}
+	/**
+	 * 通过账号查询用户信息
+	 * @param account
+	 * @return
+	 */
+	@RequestMapping("getUserInfoByAccount")
+	public UserInfo getUserInfoByAccount(String account) {
+		System.out.println("getUserInfoByAccount================>");
+		return userInfoService.getUserInfoByAccount(account);
+	}
+	/**
+	 * 查询当前登录用户是否关注该用户
+	 * @param beforeAccount
+	 * @param afterAccount
+	 * @return
+	 */
+	@RequestMapping("checkIsFollow")
+	public boolean checkIsFollow(HttpSession session,String otherAccount) {
+		System.out.println("checkIsFollow================>");
+		return userInfoService.checkIsFollow(session,otherAccount);
 	}
 }
