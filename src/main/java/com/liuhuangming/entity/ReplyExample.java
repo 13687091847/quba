@@ -385,63 +385,63 @@ public class ReplyExample {
             return (Criteria) this;
         }
 
-        public Criteria andReplyIsNull() {
-            addCriterion("reply is null");
+        public Criteria andReplyTimeIsNull() {
+            addCriterion("reply_time is null");
             return (Criteria) this;
         }
 
-        public Criteria andReplyIsNotNull() {
-            addCriterion("reply is not null");
+        public Criteria andReplyTimeIsNotNull() {
+            addCriterion("reply_time is not null");
             return (Criteria) this;
         }
 
-        public Criteria andReplyEqualTo(Date value) {
-            addCriterion("reply =", value, "reply");
+        public Criteria andReplyTimeEqualTo(Date value) {
+            addCriterion("reply_time =", value, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyNotEqualTo(Date value) {
-            addCriterion("reply <>", value, "reply");
+        public Criteria andReplyTimeNotEqualTo(Date value) {
+            addCriterion("reply_time <>", value, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyGreaterThan(Date value) {
-            addCriterion("reply >", value, "reply");
+        public Criteria andReplyTimeGreaterThan(Date value) {
+            addCriterion("reply_time >", value, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyGreaterThanOrEqualTo(Date value) {
-            addCriterion("reply >=", value, "reply");
+        public Criteria andReplyTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("reply_time >=", value, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyLessThan(Date value) {
-            addCriterion("reply <", value, "reply");
+        public Criteria andReplyTimeLessThan(Date value) {
+            addCriterion("reply_time <", value, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyLessThanOrEqualTo(Date value) {
-            addCriterion("reply <=", value, "reply");
+        public Criteria andReplyTimeLessThanOrEqualTo(Date value) {
+            addCriterion("reply_time <=", value, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyIn(List<Date> values) {
-            addCriterion("reply in", values, "reply");
+        public Criteria andReplyTimeIn(List<Date> values) {
+            addCriterion("reply_time in", values, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyNotIn(List<Date> values) {
-            addCriterion("reply not in", values, "reply");
+        public Criteria andReplyTimeNotIn(List<Date> values) {
+            addCriterion("reply_time not in", values, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyBetween(Date value1, Date value2) {
-            addCriterion("reply between", value1, value2, "reply");
+        public Criteria andReplyTimeBetween(Date value1, Date value2) {
+            addCriterion("reply_time between", value1, value2, "replyTime");
             return (Criteria) this;
         }
 
-        public Criteria andReplyNotBetween(Date value1, Date value2) {
-            addCriterion("reply not between", value1, value2, "reply");
+        public Criteria andReplyTimeNotBetween(Date value1, Date value2) {
+            addCriterion("reply_time not between", value1, value2, "replyTime");
             return (Criteria) this;
         }
     }

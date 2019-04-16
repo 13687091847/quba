@@ -51,5 +51,5 @@ public interface CommentService {
 	 * @param commentId
 	 * @return
 	 */
-	Comment findByCommentId(int commentId);
+	Comment findByCommentId(HttpSession session,int commentId);
 }

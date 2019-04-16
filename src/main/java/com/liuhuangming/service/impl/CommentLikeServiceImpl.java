@@ -12,9 +12,11 @@ import com.liuhuangming.entity.Comment;
 import com.liuhuangming.entity.CommentLike;
 import com.liuhuangming.entity.CommentLikeExample;
 import com.liuhuangming.entity.CommentLikeExample.Criteria;
+import com.liuhuangming.entity.Message;
 import com.liuhuangming.mapper.CommentLikeDAO;
 import com.liuhuangming.service.CommentLikeService;
 import com.liuhuangming.service.CommentService;
+import com.liuhuangming.service.MessageService;
 
 @Service
 public class CommentLikeServiceImpl implements CommentLikeService {
@@ -23,6 +25,8 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 	CommentLikeDAO commentLikeDAO;
 	@Autowired
 	CommentService commentService;
+	@Autowired
+	MessageService messageService;
 	/**
 	 * 通过评论ID查询该评论点赞数量
 	 */
@@ -52,7 +56,7 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 						//说明该用户点赞了该评论
 						return 1;
 					}else {
-						//用户已经取消收藏
+						//用户已经取消点赞
 						return 2;
 					}
 				}
@@ -68,10 +72,12 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 	 */
 	@Override
 	public Mes addCommentLike(HttpSession session,int commentId) {
-		Mes message = new Mes();
+		Mes mes = new Mes();
+		//定义消息实体
+		Message message = new Message();
 		CommentLike commentLike = new CommentLike();
 		String account = (String)session.getAttribute("account");
-		Comment comment = commentService.findByCommentId(commentId);
+		Comment comment = commentService.findByCommentId(session,commentId);
 		int updateCommentLike = 0;
 		int updateComment = 0;
 		if(account != null) {
@@ -101,6 +107,17 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 				comment.setLikeNum( comment.getLikeNum()  + 1);
 				comment.setLike(true);
 				updateComment = commentService.updateComment(comment);
+				//发送系统消息给评论的作者
+				if(!account.equals(comment.getAccount())) {
+					//自己给自己点赞不用发消息
+					message.setSendTo(comment.getAccount());
+					message.setSendFrom("系统管理员");
+					message.setContent(account+"刚刚点赞了你的评论--“"+comment.getContent()+"”");
+					message.setTitle("评论点赞提醒");
+					message.setStatus((byte)0);
+					//调用消息发送函数
+					messageService.sendMessage(message);
+				}
 			}else {
 				//说明用户首次点赞
 				commentLike.setAccount(account);
@@ -112,15 +129,25 @@ public class CommentLikeServiceImpl implements CommentLikeService {
 				comment.setLikeNum( comment.getLikeNum() + 1);
 				comment.setLike(true);
 				updateComment = commentService.updateComment(comment);
+				if(!account.equals(comment.getAccount())) {
+					//自己给自己点赞不用发消息
+					message.setSendTo(comment.getAccount());
+					message.setSendFrom("系统管理员");
+					message.setContent(account+"刚刚点赞了你的评论--“"+comment.getContent()+"”");
+					message.setTitle("评论点赞提醒");
+					message.setStatus((byte)0);
+					//调用消息发送函数
+					messageService.sendMessage(message);
+				}
 			}			
 			if(updateCommentLike > 0 && updateComment > 0) {
-				message.setCode(200);
+				mes.setCode(200);
 			}else {
-				message.setCode(500);
+				mes.setCode(500);
 			}
 			
 		}
-		return message;
+		return mes;
 	}
 
 }

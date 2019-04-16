@@ -255,6 +255,66 @@ public class CommentExample {
             return (Criteria) this;
         }
 
+        public Criteria andReplyNumIsNull() {
+            addCriterion("reply_num is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumIsNotNull() {
+            addCriterion("reply_num is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumEqualTo(Integer value) {
+            addCriterion("reply_num =", value, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumNotEqualTo(Integer value) {
+            addCriterion("reply_num <>", value, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumGreaterThan(Integer value) {
+            addCriterion("reply_num >", value, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumGreaterThanOrEqualTo(Integer value) {
+            addCriterion("reply_num >=", value, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumLessThan(Integer value) {
+            addCriterion("reply_num <", value, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumLessThanOrEqualTo(Integer value) {
+            addCriterion("reply_num <=", value, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumIn(List<Integer> values) {
+            addCriterion("reply_num in", values, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumNotIn(List<Integer> values) {
+            addCriterion("reply_num not in", values, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumBetween(Integer value1, Integer value2) {
+            addCriterion("reply_num between", value1, value2, "replyNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andReplyNumNotBetween(Integer value1, Integer value2) {
+            addCriterion("reply_num not between", value1, value2, "replyNum");
+            return (Criteria) this;
+        }
+
         public Criteria andStrategyIdIsNull() {
             addCriterion("strategy_id is null");
             return (Criteria) this;

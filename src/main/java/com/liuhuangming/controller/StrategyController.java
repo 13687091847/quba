@@ -5,11 +5,13 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.github.pagehelper.PageInfo;
 import com.liuhuangming.bean.Mes;
+import com.liuhuangming.bean.ResultBean;
 import com.liuhuangming.entity.Strategy;
 import com.liuhuangming.service.StrategyService;
 
@@ -32,9 +34,9 @@ public class StrategyController {
 	 * @return
 	 */
 	@RequestMapping("addStrategy")
-	public Mes addStrategy(Strategy strategy,HttpSession session) {
+	public Mes addStrategy(@RequestBody ResultBean resultBean,HttpSession session) {
 		System.out.println("addStrategy================>");
-		return strategyService.addStrategy(strategy,session);
+		return strategyService.addStrategy(resultBean,session);
 	}
 	/**
 	 * 获取当前登录用户的游记信息

@@ -110,4 +110,9 @@ public class CommentController {
 		return commentLikeService.addCommentLike(session,commentId);
 	}
 	
+	@RequestMapping("findByCommentId")
+	public Comment findByCommentId(HttpSession session,int commentId){
+		System.out.println("findByCommentId=====================>");
+		return commentService.findByCommentId(session,commentId);
+	}
 }

@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Comment">
     <id column="comment_id" jdbcType="INTEGER" property="commentId" />
     <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="reply_num" jdbcType="INTEGER" property="replyNum" />
     <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="comment_date" jdbcType="TIMESTAMP" property="commentDate" />
@@ -69,7 +70,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    comment_id, account, strategy_id, content, comment_date, like_num, `status`
+    comment_id, account, reply_num, strategy_id, content, comment_date, like_num, `status`
   </sql>
   <select id="selectByExample" parameterType="com.liuhuangming.entity.CommentExample" resultMap="BaseResultMap">
     select
@@ -110,12 +111,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.liuhuangming.entity.Comment">
-    insert into tb_comment (comment_id, account, strategy_id, 
-      content, comment_date, like_num, 
-      `status`)
-    values (#{commentId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{strategyId,jdbcType=VARCHAR}, 
-      #{content,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP}, #{likeNum,jdbcType=INTEGER}, 
-      #{status,jdbcType=BIT})
+    insert into tb_comment (comment_id, account, reply_num, 
+      strategy_id, content, comment_date, 
+      like_num, `status`)
+    values (#{commentId,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{replyNum,jdbcType=INTEGER}, 
+      #{strategyId,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{commentDate,jdbcType=TIMESTAMP}, 
+      #{likeNum,jdbcType=INTEGER}, #{status,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" parameterType="com.liuhuangming.entity.Comment">
     insert into tb_comment
@@ -125,6 +126,9 @@
       </if>
       <if test="account != null">
         account,
+      </if>
+      <if test="replyNum != null">
+        reply_num,
       </if>
       <if test="strategyId != null">
         strategy_id,
@@ -148,6 +152,9 @@
       </if>
       <if test="account != null">
         #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="replyNum != null">
+        #{replyNum,jdbcType=INTEGER},
       </if>
       <if test="strategyId != null">
         #{strategyId,jdbcType=VARCHAR},
@@ -181,6 +188,9 @@
       <if test="record.account != null">
         account = #{record.account,jdbcType=VARCHAR},
       </if>
+      <if test="record.replyNum != null">
+        reply_num = #{record.replyNum,jdbcType=INTEGER},
+      </if>
       <if test="record.strategyId != null">
         strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       </if>
@@ -205,6 +215,7 @@
     update tb_comment
     set comment_id = #{record.commentId,jdbcType=INTEGER},
       account = #{record.account,jdbcType=VARCHAR},
+      reply_num = #{record.replyNum,jdbcType=INTEGER},
       strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       content = #{record.content,jdbcType=VARCHAR},
       comment_date = #{record.commentDate,jdbcType=TIMESTAMP},
@@ -219,6 +230,9 @@
     <set>
       <if test="account != null">
         account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="replyNum != null">
+        reply_num = #{replyNum,jdbcType=INTEGER},
       </if>
       <if test="strategyId != null">
         strategy_id = #{strategyId,jdbcType=VARCHAR},
@@ -241,6 +255,7 @@
   <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Comment">
     update tb_comment
     set account = #{account,jdbcType=VARCHAR},
+      reply_num = #{replyNum,jdbcType=INTEGER},
       strategy_id = #{strategyId,jdbcType=VARCHAR},
       content = #{content,jdbcType=VARCHAR},
       comment_date = #{commentDate,jdbcType=TIMESTAMP},

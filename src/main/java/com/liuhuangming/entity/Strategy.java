@@ -2,6 +2,7 @@ package com.liuhuangming.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -75,8 +76,21 @@ public class Strategy implements Serializable {
      * 用户信息
      */
     private UserInfo userInfo;
+    /**
+     * 图片集合
+     */
+    private List<StrategyImg> strategyImgs;
     
-    public UserInfo getUserInfo() {
+    
+    public List<StrategyImg> getStrategyImgs() {
+		return strategyImgs;
+	}
+
+	public void setStrategyImgs(List<StrategyImg> strategyImgs) {
+		this.strategyImgs = strategyImgs;
+	}
+
+	public UserInfo getUserInfo() {
 		return userInfo;
 	}
 

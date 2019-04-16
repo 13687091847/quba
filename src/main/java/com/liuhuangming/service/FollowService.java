@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import com.liuhuangming.bean.Mes;
 import com.liuhuangming.entity.Follow;
 
 
@@ -31,7 +32,8 @@ public interface FollowService {
 	 * 查询这前前面参数指代的用户之前是否关注过后面的用户（也就是查询第一个用户关注第二个用户是否存在于关注表）
 	 * @param account
 	 * @param followedUser
-	 * @return
+	 * @return 如果存在表中则返回相应的关注ID,并且在message中写明状态；若不存在表中，则返回0
 	 */
-	int checkIsExist(String account,String followedUser);
+	Mes checkIsExist(String account,String followedUser);
+	
 }

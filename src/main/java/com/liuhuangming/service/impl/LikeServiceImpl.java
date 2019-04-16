@@ -106,9 +106,9 @@ public class LikeServiceImpl implements LikeService {
 				if(!account.equals(authorAccount)) {
 					//自己给自己点赞不用发消息
 					message.setSendTo(authorAccount);
-					message.setSendFrom("去吧系统管理员");
-					message.setContent(account+"刚刚点赞了你的游记");
-					message.setTitle("系统消息");
+					message.setSendFrom("系统管理员");
+					message.setContent(account+"刚刚点赞了你的游记--“"+strategy.getTitle()+"”");
+					message.setTitle("游记点赞提醒");
 					message.setStatus((byte)0);
 					//调用消息发送函数
 					messageService.sendMessage(message);
@@ -127,9 +127,9 @@ public class LikeServiceImpl implements LikeService {
 				if(!account.equals(authorAccount)) {
 					//自己给自己点赞不用发消息
 					message.setSendTo(authorAccount);
-					message.setSendFrom("去吧系统管理员");
-					message.setContent(account+"刚刚点赞了你的游记");
-					message.setTitle("系统消息");
+					message.setSendFrom("系统管理员");
+					message.setContent(account+"刚刚点赞了你的游记--“"+strategy.getTitle()+"”");
+					message.setTitle("游记点赞提醒");
 					message.setStatus((byte)0);
 					//调用消息发送函数
 					messageService.sendMessage(message);

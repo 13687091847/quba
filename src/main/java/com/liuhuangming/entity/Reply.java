@@ -3,6 +3,8 @@ package com.liuhuangming.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * tb_reply
  * @author 
@@ -28,9 +30,33 @@ public class Reply implements Serializable {
     /**
      * 回复时间
      */
-    private Date reply;
+    @JsonFormat(pattern="MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date replyTime;
 
-    private static final long serialVersionUID = 1L;
+    private UserInfo userInfo;
+    
+    /**
+     * 判断该回复是否为当前登录用户所写
+     */
+    private Boolean owner;
+    
+    public Boolean getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Boolean owner) {
+		this.owner = owner;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	private static final long serialVersionUID = 1L;
 
     public Integer getId() {
         return id;
@@ -64,12 +90,12 @@ public class Reply implements Serializable {
         this.content = content;
     }
 
-    public Date getReply() {
-        return reply;
+    public Date getReplyTime() {
+        return replyTime;
     }
 
-    public void setReply(Date reply) {
-        this.reply = reply;
+    public void setReplyTime(Date replyTime) {
+        this.replyTime = replyTime;
     }
 
     @Override
@@ -88,7 +114,7 @@ public class Reply implements Serializable {
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
             && (this.getCommentid() == null ? other.getCommentid() == null : this.getCommentid().equals(other.getCommentid()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
-            && (this.getReply() == null ? other.getReply() == null : this.getReply().equals(other.getReply()));
+            && (this.getReplyTime() == null ? other.getReplyTime() == null : this.getReplyTime().equals(other.getReplyTime()));
     }
 
     @Override
@@ -99,7 +125,7 @@ public class Reply implements Serializable {
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
         result = prime * result + ((getCommentid() == null) ? 0 : getCommentid().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
-        result = prime * result + ((getReply() == null) ? 0 : getReply().hashCode());
+        result = prime * result + ((getReplyTime() == null) ? 0 : getReplyTime().hashCode());
         return result;
     }
 
@@ -113,7 +139,7 @@ public class Reply implements Serializable {
         sb.append(", account=").append(account);
         sb.append(", commentid=").append(commentid);
         sb.append(", content=").append(content);
-        sb.append(", reply=").append(reply);
+        sb.append(", replyTime=").append(replyTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

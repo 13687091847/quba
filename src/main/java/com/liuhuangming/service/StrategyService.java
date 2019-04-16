@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import com.github.pagehelper.PageInfo;
 import com.liuhuangming.bean.Mes;
+import com.liuhuangming.bean.ResultBean;
 import com.liuhuangming.entity.Strategy;
 
 /**
@@ -21,7 +22,7 @@ public interface StrategyService {
 	 * @param session
 	 * @return
 	 */
-	Mes addStrategy(Strategy strategy,HttpSession session);
+	Mes addStrategy(ResultBean resultBean,HttpSession session);
 	/**
 	 * 查看用户该游记是否已经发送
 	 * @param strategy

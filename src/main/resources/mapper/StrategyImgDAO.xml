@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.liuhuangming.mapper.ReplyDAO">
-  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.Reply">
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="account" jdbcType="VARCHAR" property="account" />
-    <result column="commentId" jdbcType="INTEGER" property="commentid" />
-    <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="reply_time" jdbcType="TIMESTAMP" property="replyTime" />
+<mapper namespace="com.liuhuangming.mapper.StrategyImgDAO">
+  <resultMap id="BaseResultMap" type="com.liuhuangming.entity.StrategyImg">
+    <id column="strategy_img_id" jdbcType="INTEGER" property="strategyImgId" />
+    <result column="strategy_id" jdbcType="VARCHAR" property="strategyId" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,15 +66,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, account, commentId, content, reply_time
+    strategy_img_id, strategy_id, img_url, upload_time
   </sql>
-  <select id="selectByExample" parameterType="com.liuhuangming.entity.ReplyExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.liuhuangming.entity.StrategyImgExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from tb_reply
+    from tb_strategy_img
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -94,85 +93,76 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from tb_reply
-    where id = #{id,jdbcType=INTEGER}
+    from tb_strategy_img
+    where strategy_img_id = #{strategyImgId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from tb_reply
-    where id = #{id,jdbcType=INTEGER}
+    delete from tb_strategy_img
+    where strategy_img_id = #{strategyImgId,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.ReplyExample">
-    delete from tb_reply
+  <delete id="deleteByExample" parameterType="com.liuhuangming.entity.StrategyImgExample">
+    delete from tb_strategy_img
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.liuhuangming.entity.Reply">
-    insert into tb_reply (id, account, commentId, 
-      content, reply_time)
-    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{commentid,jdbcType=INTEGER}, 
-      #{content,jdbcType=VARCHAR}, #{replyTime,jdbcType=TIMESTAMP})
+  <insert id="insert" parameterType="com.liuhuangming.entity.StrategyImg">
+    insert into tb_strategy_img (strategy_img_id, strategy_id, img_url, 
+      upload_time)
+    values (#{strategyImgId,jdbcType=INTEGER}, #{strategyId,jdbcType=VARCHAR}, #{imgUrl,jdbcType=VARCHAR}, 
+      #{uploadTime,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.liuhuangming.entity.Reply">
-    insert into tb_reply
+  <insert id="insertSelective" parameterType="com.liuhuangming.entity.StrategyImg">
+    insert into tb_strategy_img
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
+      <if test="strategyImgId != null">
+        strategy_img_id,
       </if>
-      <if test="account != null">
-        account,
+      <if test="strategyId != null">
+        strategy_id,
       </if>
-      <if test="commentid != null">
-        commentId,
+      <if test="imgUrl != null">
+        img_url,
       </if>
-      <if test="content != null">
-        content,
-      </if>
-      <if test="replyTime != null">
-        reply_time,
+      <if test="uploadTime != null">
+        upload_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+      <if test="strategyImgId != null">
+        #{strategyImgId,jdbcType=INTEGER},
       </if>
-      <if test="account != null">
-        #{account,jdbcType=VARCHAR},
+      <if test="strategyId != null">
+        #{strategyId,jdbcType=VARCHAR},
       </if>
-      <if test="commentid != null">
-        #{commentid,jdbcType=INTEGER},
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="content != null">
-        #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="replyTime != null">
-        #{replyTime,jdbcType=TIMESTAMP},
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="com.liuhuangming.entity.ReplyExample" resultType="java.lang.Long">
-    select count(*) from tb_reply
+  <select id="countByExample" parameterType="com.liuhuangming.entity.StrategyImgExample" resultType="java.lang.Long">
+    select count(*) from tb_strategy_img
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update tb_reply
+    update tb_strategy_img
     <set>
-      <if test="record.id != null">
-        id = #{record.id,jdbcType=INTEGER},
+      <if test="record.strategyImgId != null">
+        strategy_img_id = #{record.strategyImgId,jdbcType=INTEGER},
       </if>
-      <if test="record.account != null">
-        account = #{record.account,jdbcType=VARCHAR},
+      <if test="record.strategyId != null">
+        strategy_id = #{record.strategyId,jdbcType=VARCHAR},
       </if>
-      <if test="record.commentid != null">
-        commentId = #{record.commentid,jdbcType=INTEGER},
+      <if test="record.imgUrl != null">
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="record.content != null">
-        content = #{record.content,jdbcType=VARCHAR},
-      </if>
-      <if test="record.replyTime != null">
-        reply_time = #{record.replyTime,jdbcType=TIMESTAMP},
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -180,40 +170,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update tb_reply
-    set id = #{record.id,jdbcType=INTEGER},
-      account = #{record.account,jdbcType=VARCHAR},
-      commentId = #{record.commentid,jdbcType=INTEGER},
-      content = #{record.content,jdbcType=VARCHAR},
-      reply_time = #{record.replyTime,jdbcType=TIMESTAMP}
+    update tb_strategy_img
+    set strategy_img_id = #{record.strategyImgId,jdbcType=INTEGER},
+      strategy_id = #{record.strategyId,jdbcType=VARCHAR},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      upload_time = #{record.uploadTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.Reply">
-    update tb_reply
+  <update id="updateByPrimaryKeySelective" parameterType="com.liuhuangming.entity.StrategyImg">
+    update tb_strategy_img
     <set>
-      <if test="account != null">
-        account = #{account,jdbcType=VARCHAR},
+      <if test="strategyId != null">
+        strategy_id = #{strategyId,jdbcType=VARCHAR},
       </if>
-      <if test="commentid != null">
-        commentId = #{commentid,jdbcType=INTEGER},
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
       </if>
-      <if test="content != null">
-        content = #{content,jdbcType=VARCHAR},
-      </if>
-      <if test="replyTime != null">
-        reply_time = #{replyTime,jdbcType=TIMESTAMP},
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where strategy_img_id = #{strategyImgId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.Reply">
-    update tb_reply
-    set account = #{account,jdbcType=VARCHAR},
-      commentId = #{commentid,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR},
-      reply_time = #{replyTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+  <update id="updateByPrimaryKey" parameterType="com.liuhuangming.entity.StrategyImg">
+    update tb_strategy_img
+    set strategy_id = #{strategyId,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=TIMESTAMP}
+    where strategy_img_id = #{strategyImgId,jdbcType=INTEGER}
   </update>
 </mapper>

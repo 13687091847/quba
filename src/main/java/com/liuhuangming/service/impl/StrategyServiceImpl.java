@@ -12,13 +12,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.liuhuangming.bean.IDUtils;
 import com.liuhuangming.bean.Mes;
+import com.liuhuangming.bean.ResultBean;
 import com.liuhuangming.entity.Strategy;
 import com.liuhuangming.entity.StrategyExample;
 import com.liuhuangming.entity.StrategyExample.Criteria;
+import com.liuhuangming.entity.StrategyImg;
 import com.liuhuangming.entity.UserInfo;
 import com.liuhuangming.mapper.StrategyDAO;
 import com.liuhuangming.service.CollectService;
 import com.liuhuangming.service.LikeService;
+import com.liuhuangming.service.StrategyImgService;
 import com.liuhuangming.service.StrategyService;
 import com.liuhuangming.service.UserInfoService;
 import com.sun.tools.javac.resources.compiler;
@@ -39,19 +42,23 @@ public class StrategyServiceImpl implements StrategyService {
 	LikeService likeService;
 	@Autowired
 	CollectService collectService;
+	@Autowired
+	StrategyImgService strategyImgService;
 
 	/**
 	 * 用户发表游记
 	 */
 	@Override
-	public Mes addStrategy(Strategy strategy, HttpSession session) {
+	public Mes addStrategy(ResultBean resultBean, HttpSession session) {
 		Mes message = new Mes();
+		Strategy strategy = resultBean.getStrategy();
 		String account = (String) session.getAttribute("account");
 		if (account != null) {
 			strategy.setAccount(account);
 		}
+		String strategyId = IDUtils.createID();
 		strategy.setStatus(true);
-		strategy.setStrategyId(IDUtils.createID());
+		strategy.setStrategyId(strategyId);
 		strategy.setCollectNum(0);
 		strategy.setLikeNum(0);
 		strategy.setCommentNum(0);
@@ -62,8 +69,18 @@ public class StrategyServiceImpl implements StrategyService {
 			message.setMessage("请勿重复发送");
 			return message;
 		}
-		int resultCode = strategyDAO.insertSelective(strategy);
-		if (resultCode > 0) {
+		// 插入游记
+		int insertStrategyCode = strategyDAO.insertSelective(strategy);
+		List<StrategyImg> strategyImgs = new ArrayList<>();
+		for (String url : resultBean.getStrategyImgs()) {
+			StrategyImg strategyImg = new StrategyImg();
+			strategyImg.setImgUrl(url);
+			strategyImg.setStrategyId(strategyId);
+			strategyImgs.add(strategyImg);
+		}
+		// 插入游记附图
+		int insertStrategyImgCode = strategyImgService.addStrategyImg(strategyImgs);
+		if (insertStrategyCode > 0 && insertStrategyImgCode >0) {
 			message.setCode(200);
 			return message;
 		}
@@ -143,6 +160,8 @@ public class StrategyServiceImpl implements StrategyService {
 		Strategy strategy = strategyDAO.selectByPrimaryKey(strategyId);
 		// 根据用户账号查询用户信息
 		strategy.setUserInfo(userInfoService.getUserInfoByAccount(strategy.getAccount()));
+		//查询对应的游记附图
+		strategy.setStrategyImgs(strategyImgService.findByStrategyId(strategyId));
 		return strategy;
 	}
 
@@ -179,6 +198,8 @@ public class StrategyServiceImpl implements StrategyService {
 					// 根据用户账号查询用户信息
 					UserInfo userInfo = userInfoService.getUserInfoByAccount(account);
 					strategy.setUserInfo(userInfo);
+					//查询对应的游记附图
+					strategy.setStrategyImgs(strategyImgService.findByStrategyId(strategy.getStrategyId()));
 				}
 			}
 		}
@@ -203,6 +224,8 @@ public class StrategyServiceImpl implements StrategyService {
 				// 根据用户账号查询用户信息
 				UserInfo userInfo = userInfoService.getUserInfoByAccount(strategy.getAccount());
 				strategy.setUserInfo(userInfo);
+				//查询对应的游记附图
+				strategy.setStrategyImgs(strategyImgService.findByStrategyId(strategy.getStrategyId()));
 			}
 		}
 		PageInfo<Strategy> pageInfo = new PageInfo<Strategy>(strategies);
@@ -224,6 +247,8 @@ public class StrategyServiceImpl implements StrategyService {
 				// 根据用户账号查询用户信息
 				UserInfo userInfo = userInfoService.getUserInfoByAccount(strategy.getAccount());
 				strategy.setUserInfo(userInfo);
+				//查询对应的游记附图
+				strategy.setStrategyImgs(strategyImgService.findByStrategyId(strategy.getStrategyId()));
 			}
 		}
 		return strategies;
@@ -236,17 +261,18 @@ public class StrategyServiceImpl implements StrategyService {
 	public List<Strategy> getStrategyByTitle(String title) {
 		StrategyExample strategyExample = new StrategyExample();
 		Criteria criteria = strategyExample.createCriteria();
-		criteria.andTitleLike("%"+title+"%");
+		criteria.andTitleLike("%" + title + "%");
 		return strategyDAO.selectByExample(strategyExample);
 	}
+
 	/**
 	 * 增加浏览次数
 	 */
 	@Override
 	public int addBrowseVolume(String strategyId) {
 		Strategy strategy = strategyDAO.selectByPrimaryKey(strategyId);
-		int browseVolume = strategy.getBrowseVolume() == null?0:strategy.getBrowseVolume();
-		strategy.setBrowseVolume(browseVolume+1);
+		int browseVolume = strategy.getBrowseVolume() == null ? 0 : strategy.getBrowseVolume();
+		strategy.setBrowseVolume(browseVolume + 1);
 		return strategyDAO.updateByPrimaryKeySelective(strategy);
 	}
 

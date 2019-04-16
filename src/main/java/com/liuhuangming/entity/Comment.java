@@ -21,6 +21,11 @@ public class Comment implements Serializable {
     private String account;
 
     /**
+     * 回复数量
+     */
+    private Integer replyNum;
+
+    /**
      * 游记ID
      */
     private String strategyId;
@@ -46,9 +51,10 @@ public class Comment implements Serializable {
      */
     private Boolean status;
     /**
-     * 存放评论用户的详细信息
+     * 该评论的作者的信息
      */
     private UserInfo userInfo;
+
     /**
      * 是否为当前登录用户的评论（数据库无此字段）
      */
@@ -61,8 +67,20 @@ public class Comment implements Serializable {
     /**
      * 该条评论评论的游记
      */
-    private Strategy strategy;
+	private Strategy strategy;
+	/**
+	 * 当前登录用户是否关注该评论的发布者
+	 */
+    public Boolean follow;
     
+    public Boolean getFollow() {
+		return follow;
+	}
+
+	public void setFollow(Boolean follow) {
+		this.follow = follow;
+	}
+
 	public boolean isOwner() {
 		return owner;
 	}
@@ -111,6 +129,14 @@ public class Comment implements Serializable {
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public Integer getReplyNum() {
+        return replyNum;
+    }
+
+    public void setReplyNum(Integer replyNum) {
+        this.replyNum = replyNum;
     }
 
     public String getStrategyId() {
@@ -167,6 +193,7 @@ public class Comment implements Serializable {
         Comment other = (Comment) that;
         return (this.getCommentId() == null ? other.getCommentId() == null : this.getCommentId().equals(other.getCommentId()))
             && (this.getAccount() == null ? other.getAccount() == null : this.getAccount().equals(other.getAccount()))
+            && (this.getReplyNum() == null ? other.getReplyNum() == null : this.getReplyNum().equals(other.getReplyNum()))
             && (this.getStrategyId() == null ? other.getStrategyId() == null : this.getStrategyId().equals(other.getStrategyId()))
             && (this.getContent() == null ? other.getContent() == null : this.getContent().equals(other.getContent()))
             && (this.getCommentDate() == null ? other.getCommentDate() == null : this.getCommentDate().equals(other.getCommentDate()))
@@ -180,6 +207,7 @@ public class Comment implements Serializable {
         int result = 1;
         result = prime * result + ((getCommentId() == null) ? 0 : getCommentId().hashCode());
         result = prime * result + ((getAccount() == null) ? 0 : getAccount().hashCode());
+        result = prime * result + ((getReplyNum() == null) ? 0 : getReplyNum().hashCode());
         result = prime * result + ((getStrategyId() == null) ? 0 : getStrategyId().hashCode());
         result = prime * result + ((getContent() == null) ? 0 : getContent().hashCode());
         result = prime * result + ((getCommentDate() == null) ? 0 : getCommentDate().hashCode());
@@ -196,6 +224,7 @@ public class Comment implements Serializable {
         sb.append("Hash = ").append(hashCode());
         sb.append(", commentId=").append(commentId);
         sb.append(", account=").append(account);
+        sb.append(", replyNum=").append(replyNum);
         sb.append(", strategyId=").append(strategyId);
         sb.append(", content=").append(content);
         sb.append(", commentDate=").append(commentDate);
